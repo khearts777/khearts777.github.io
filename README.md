@@ -3,44 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K-Hearts Pet Universe</title>
+<title>K-Hearts Fan Universe</title>
+<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
-
 body {
   margin:0; padding:0;
-  font-family: 'Bubblegum Sans', cursive;
+  font-family:'Bubblegum Sans', cursive;
   background: linear-gradient(135deg, #ffe6f0, #ffd1ff);
   color:#000;
+  transition: all 0.3s;
 }
-
 nav {
-  display:flex; gap:5px;
+  display:flex; justify-content:center; flex-wrap:wrap; gap:5px;
   background:#ffb6c1; padding:5px;
-  justify-content:center; flex-wrap:wrap;
 }
 nav button {
-  padding:6px 12px; background:#fff0f5;
-  border:none; border-radius:8px; cursor:pointer;
-  font-weight:bold; transition:all 0.2s;
+  padding:8px 15px; border:none; border-radius:10px;
+  cursor:pointer; background:#fff0f5; font-weight:bold;
+  transition:all 0.2s;
 }
 nav button:hover {transform:scale(1.1); background:#ff99cc;}
-
 .page {display:none; padding:10px;}
 h1,h2,h3 {text-align:center; color:#ff3399;}
-#memberList div {background:#ffe0f5; margin:5px; padding:8px; border-radius:10px; text-align:center; transition:0.3s;}
-#memberList div:hover {transform:scale(1.05); box-shadow:0 0 10px #ff99cc;}
-
+.member-card {
+  background:#ffe0f5; margin:5px; padding:8px;
+  border-radius:12px; text-align:center;
+  transition:0.3s; cursor:pointer;
+}
+.member-card:hover {transform:scale(1.05); box-shadow:0 0 15px #ff99cc;}
 #petContainer {font-size:120px; text-align:center; margin:20px auto; transition:all 0.3s;}
 #petHappiness {font-weight:bold; color:#ff3399;}
-.itemBtn {margin:2px; padding:5px; border-radius:8px; cursor:pointer; background:#ffccf0; border:none; transition:0.2s;}
+.itemBtn {margin:3px; padding:5px; border-radius:10px; cursor:pointer; background:#ffccf0; border:none; transition:0.2s;}
 .itemBtn:hover {transform:scale(1.1); background:#ff99cc;}
 #chatWindow {height:200px; overflow-y:auto; border:2px solid #ff99cc; padding:5px; border-radius:10px; background:#fff0f5;}
 .chatBubble {background:#ffe6f0; margin:3px; padding:5px; border-radius:10px;}
-#quizArea button {margin:3px; padding:5px; border-radius:8px; cursor:pointer; background:#ffccf0; border:none; transition:0.2s;}
+#quizArea button {margin:3px; padding:5px; border-radius:10px; cursor:pointer; background:#ffccf0; border:none; transition:0.2s;}
 #quizArea button:hover {transform:scale(1.1); background:#ff99cc;}
-#coins {font-weight:bold; color:#ff3399;}
-#badges {font-weight:bold; color:#ff3399;}
+#coins,#badges {font-weight:bold; color:#ff3399;}
 </style>
 </head>
 <body>
@@ -114,7 +113,7 @@ h1,h2,h3 {text-align:center; color:#ff3399;}
 <!-- LYRICS PAGE -->
 <div id="lyrics" class="page">
 <h2>🎵 No Limits Lyrics</h2>
-<div id="lyricsArea" style="height:250px;overflow-y:auto;border:2px solid #ff99cc;padding:5px;border-radius:10px;">
+<div style="height:250px; overflow-y:auto; border:2px solid #ff99cc; padding:5px; border-radius:10px;">
 <p>No limits<br>No pressure<br>No ceiling<br>We go up</p>
 <p>Walk in like a headline, cameras all flash<br>Step so sharp, make the whole world crash<br>Different languages, same ambition<br>Born to win — that’s the only mission</p>
 <p>Mirror mirror, we don’t compete<br>We break the glass in designer feet<br>No permission, we elevate<br>Watch how legends are made</p>
@@ -125,10 +124,9 @@ h1,h2,h3 {text-align:center; color:#ff3399;}
 </div>
 
 <script>
-// ==== INITIAL DATA ====
+// ==== DATA ====
 if(!localStorage.getItem('kheartsData')){
-localStorage.setItem('kheartsData',JSON.stringify({
-username:'',coins:0,badges:[],pet:'🐧',petHappiness:50,shopItems:[],chat:[]}));
+localStorage.setItem('kheartsData',JSON.stringify({username:'',coins:0,badges:[],pet:'🐧',petHappiness:50,shopItems:[],chat:[]}));
 }
 let data=JSON.parse(localStorage.getItem('kheartsData'));
 
@@ -145,6 +143,7 @@ function updateMembers(){
 let list=document.getElementById('memberList'); list.innerHTML='';
 members.forEach(m=>{
 let div=document.createElement('div');
+div.className='member-card';
 div.innerHTML=`<h3>${m.name} ${m.pet}</h3><p>Role: ${m.role}</p><p>Favorites: ${m.fav}</p>`;
 list.appendChild(div);
 });
@@ -175,7 +174,7 @@ alert(`Purchased ${name}!`);
 saveData(); updateDisplay();
 }
 
-// ==== CHAT SYSTEM ====
+// ==== CHAT ====
 function updateChatWindow(){
 let win=document.getElementById('chatWindow'); win.innerHTML='';
 data.chat.forEach(msg=>{let p=document.createElement('div'); p.className='chatBubble'; p.innerHTML=msg; win.appendChild(p);});
@@ -189,7 +188,7 @@ data.chat.push(userMsg);
 let responses=[
 `Karlyn waves at you! 💖`,`Trixie smiles! 🐱`,`Hayley cheers! 🐶`,`Alyssa claps! 🎀`,
 `Your coins: ${data.coins}`,'Keep playing with your pet!','You are awesome 💖',
-`Your badges: ${data.badges.join(',')||'None'}','Yay! Pet loves you! 🎾'
+`Your badges: ${data.badges.join(',')||'None'}`,'Yay! Pet loves you! 🎾'
 ];
 data.chat.push('<b>Idol:</b> '+responses[Math.floor(Math.random()*responses.length)]);
 input.value=''; saveData(); updateChatWindow();
@@ -207,7 +206,7 @@ let lb=document.getElementById('leaderboardList'); lb.innerHTML='';
 list.forEach((u,i)=>{let p=document.createElement('p'); p.innerText=(i+1)+". "+u.name+" — "+u.coins+" coins"; lb.appendChild(p);});
 }
 
-// ==== QUIZ SYSTEM ====
+// ==== QUIZ ====
 const quizQuestions=[
 {question:"What is Karlyn's favorite color?",options:["White","Pink","Black"],answer:"White",member:"Karlyn"},
 {question:"Which pet does Trixie have?",options:["Dog","Cat","Penguin"],answer:"Cat",member:"Trixie"},
@@ -217,7 +216,7 @@ const quizQuestions=[
 let currentQ=0;
 function loadQuiz(){
 let area=document.getElementById('quizArea'); area.innerHTML='';
-if(currentQ>=quizQuestions.length){alert('Quiz finished!'); data.coins+=20; data.badges.push('☁️🎀🐶'); saveData(); updateDisplay(); return;}
+if(currentQ>=quizQuestions.length){alert('Quiz finished! +20 Coins & Badges!'); data.coins+=20; data.badges.push('☁️🎀🐶'); saveData(); updateDisplay(); return;}
 let q=quizQuestions[currentQ];
 let html=`<p>${q.question}</p>`;
 q.options.forEach(opt=>{html+=`<button onclick="checkAnswer('${opt}')">${opt}</button>`;});
