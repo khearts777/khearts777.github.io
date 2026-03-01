@@ -295,6 +295,91 @@ lyricsText.forEach(line=>{
 });
 
 // ==== FAN CHAT ====
+  <!-- CHAT -->
+<div id="chatPage" class="page">
+<h2>💬 KAES Chat with Idols</h2>
+<div id="chatWindow" style="height:200px;overflow-y:scroll;background:#fff0f5;padding:10px;border:2px solid #ffb6c1;border-radius:10px;"></div>
+<input type="text" id="chatInput" placeholder="Type your message..." style="width:70%;">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+<!-- DAILY LEADERBOARD -->
+<div id="dailyLeaderboardPage" class="page">
+<h2>🏅 Daily Leaderboard</h2>
+<p>Top KAES fans today!</p>
+<div id="dailyBoard"></div>
+</div>
+
+<script>
+// ==== SETUP LOCAL STORAGE DATA ====
+if(!localStorage.getItem('kheartsData')){
+  localStorage.setItem('kheartsData',JSON.stringify({username:'',coins:0,badges:[],chat:[],daily:[{name:'?',coins:0},{name:'?',coins:0},{name:'?',coins:0}]}));
+}
+let data=JSON.parse(localStorage.getItem('kheartsData'));
+
+// ==== CHAT FUNCTIONS ====
+function updateChatWindow(){
+  let chatWin=document.getElementById('chatWindow');
+  chatWin.innerHTML='';
+  data.chat.forEach(msg=>{
+    let p=document.createElement('p'); p.innerHTML=msg; chatWin.appendChild(p);
+  });
+  chatWin.scrollTop=chatWin.scrollHeight;
+}
+function sendMessage(){
+  let input=document.getElementById('chatInput');
+  if(input.value.trim()===''){return;}
+  let userMsg="<b>"+(data.username||'Guest')+":</b> "+input.value;
+  data.chat.push(userMsg);
+
+  // Idol responses (randomized)
+  let idolResponses=[
+    "☁️ Karlyn noticed your message!",
+    "🎀 Alyssa waves hello!",
+    "🥟 Trixie cheers you on!",
+    "💖 You're amazing, keep going!",
+    "✨ KAES universe shines because of you!"
+  ];
+  let idolReply="<b>Idol:</b> "+idolResponses[Math.floor(Math.random()*idolResponses.length)];
+  data.chat.push(idolReply);
+
+  saveData(); updateChatWindow(); input.value='';
+}
+function saveData(){ localStorage.setItem('kheartsData',JSON.stringify(data)); }
+
+// ==== DAILY LEADERBOARD FUNCTIONS ====
+function updateDailyLeaderboard(){
+  let board=document.getElementById('dailyBoard');
+  board.innerHTML='';
+  // Sort daily by coins
+  data.daily.sort((a,b)=>b.coins-a.coins);
+  data.daily.forEach((player,i)=>{
+    let p=document.createElement('p');
+    p.innerText=(i+1)+". "+player.name+" — "+player.coins+" coins";
+    board.appendChild(p);
+  });
+}
+
+// ==== ADD/UPDATE DAILY SCORES ====
+function submitDailyScore(name,coins){
+  if(!name) name='Guest';
+  let existing=data.daily.find(p=>p.name===name);
+  if(existing){ existing.coins=coins; } 
+  else{ data.daily.push({name:name,coins:coins}); }
+  saveData(); updateDailyLeaderboard();
+}
+
+// ==== EXAMPLE USAGE ====
+// Prompt for username if not set
+if(!data.username){
+  data.username=prompt("Enter your KAES fan name:");
+  saveData();
+}
+
+// Initialize chat and leaderboard
+updateChatWindow();
+updateDailyLeaderboard();
+</script>
 if(!data.chatHistory) data.chatHistory=[];
 const responses = [
   "✨ KAES love your energy!",
