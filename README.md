@@ -51,12 +51,13 @@ button:hover{background:#ff1493;transform:scale(1.05);}
 .heart::after{content:"💖";font-size:50px;}
 @keyframes floatMove{0%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-600px) rotate(180deg);}100%{transform:translateY(0) rotate(360deg);}}
 @keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
-/* GLITTER BURST FOR FANDOM */
 .glitter-burst{position:absolute;width:15px;height:15px;border-radius:50%;background:hotpink;animation:burstMove 1.5s ease-out forwards;pointer-events:none;}
-@keyframes burstMove{
-  0%{transform:translate(0,0) scale(0.5);opacity:1;}
-  100%{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0;}
-}
+@keyframes burstMove{0%{transform:translate(0,0) scale(0.5);opacity:1;}100%{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0;}}
+.quiz-section{margin:20px auto;max-width:600px;background:white;padding:20px;border-radius:20px;box-shadow:0 10px 20px rgba(255,182,193,0.4);}
+.quiz-section h3{color:#ff69b4;}
+.badge{font-size:30px;margin-top:10px;opacity:0;transition:1s;}
+.badge.show{opacity:1; animation: badgePop 1s;}
+@keyframes badgePop{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1.2);opacity:1;}}
 </style>
 </head>
 <body>
@@ -67,6 +68,7 @@ button:hover{background:#ff1493;transform:scale(1.05);}
 <a onclick="showPage('page3')">Members</a>
 <a onclick="showPage('page4')">Countdown</a>
 <a onclick="showPage('page5')">No Limits</a>
+<a onclick="showPage('page6')">Quizzes</a>
 </nav>
 
 <!-- PAGE 1: Home -->
@@ -107,8 +109,46 @@ button:hover{background:#ff1493;transform:scale(1.05);}
 <!-- PAGE 5: No Limits -->
 <div class="page" id="page5">
 <h2>First Song: No Limits</h2>
-<div id="song-container">
-<!-- Lyrics lines will be auto-animated -->
+<div id="song-container"></div>
+</div>
+
+<!-- PAGE 6: Quizzes -->
+<div class="page" id="page6">
+<h2>K-HEARTS Member Quiz</h2>
+<div class="quiz-section" id="quizKarlyn">
+<h3>Karlyn Quiz</h3>
+<form id="formKarlyn">
+<label>Favorite color? <input name="q1"></label><br>
+<label>Loves? <input name="q2"></label><br>
+<label>Height? <input name="q3"></label><br>
+<label>Favorite food type? <input name="q4"></label><br>
+<button type="button" onclick="checkQuiz('Karlyn')">Submit</button>
+</form>
+<div class="badge" id="badgeKarlyn">☁️</div>
+</div>
+
+<div class="quiz-section" id="quizAlyssa">
+<h3>Alyssa Quiz</h3>
+<form id="formAlyssa">
+<label>Favorite color? <input name="q1"></label><br>
+<label>Personality style? <input name="q2"></label><br>
+<label>Height? <input name="q3"></label><br>
+<label>Loves? <input name="q4"></label><br>
+<button type="button" onclick="checkQuiz('Alyssa')">Submit</button>
+</form>
+<div class="badge" id="badgeAlyssa">🎀</div>
+</div>
+
+<div class="quiz-section" id="quizTrixie">
+<h3>Trixie Quiz</h3>
+<form id="formTrixie">
+<label>Favorite clothes style? <input name="q1"></label><br>
+<label>Loves? <input name="q2"></label><br>
+<label>Height? <input name="q3"></label><br>
+<label>Favorite group? <input name="q4"></label><br>
+<button type="button" onclick="checkQuiz('Trixie')">Submit</button>
+</form>
+<div class="badge" id="badgeTrixie">🥟</div>
 </div>
 </div>
 
@@ -127,7 +167,7 @@ function showPage(id){
   document.getElementById(id).classList.add('active');
 }
 
-/* FANDOM REVEAL WITH GLITTER BURST */
+/* FANDOM REVEAL */
 function revealFandom(){
   const fandom=document.getElementById("fandom");
   fandom.style.opacity="1";
@@ -179,7 +219,7 @@ document.addEventListener("mousemove",function(e){
   setTimeout(()=>sparkle.remove(),700);
 });
 
-/* NO LIMITS LYRICS ANIMATION */
+/* NO LIMITS LYRICS */
 const lyrics=[
 "No limits","No pressure","No ceiling","We go up",
 "Walk in like a headline, cameras all flash",
@@ -239,9 +279,46 @@ lyrics.forEach((line,i)=>{
   div.style.animationDelay=(i*0.5)+'s';
   container.appendChild(div);
 });
+
+/* QUIZ CHECKS */
+function checkQuiz(member){
+  let correct=false;
+  if(member==="Karlyn"){
+    const form=document.forms["formKarlyn"];
+    if(form.q1.value.toLowerCase().includes("white") &&
+       form.q2.value.toLowerCase().includes("penguins") &&
+       form.q3.value==="154" &&
+       form.q4.value.toLowerCase().includes("japanese")){
+      correct=true;
+    }
+    if(correct){document.getElementById("badgeKarlyn").classList.add("show");alert("You earned Karlyn's badge ☁️!");}
+  }
+  if(member==="Alyssa"){
+    const form=document.forms["formAlyssa"];
+    if(form.q1.value.toLowerCase().includes("pink") &&
+       form.q2.value.toLowerCase().includes("coquette") &&
+       form.q3.value==="150" &&
+       form.q4.value.toLowerCase().includes("ive")){
+      correct=true;
+    }
+    if(correct){document.getElementById("badgeAlyssa").classList.add("show");alert("You earned Alyssa's badge 🎀!");}
+  }
+  if(member==="Trixie"){
+    const form=document.forms["formTrixie"];
+    if(form.q1.value.toLowerCase().includes("wushu") &&
+       form.q2.value.toLowerCase().includes("skz") &&
+       form.q3.value==="153" &&
+       form.q4.value.toLowerCase().includes("njz")){
+      correct=true;
+    }
+    if(correct){document.getElementById("badgeTrixie").classList.add("show");alert("You earned Trixie's badge 🥟!");}
+  }
+}
 </script>
+
 <footer>
 © 2026 K-HEARTS Official ♡ All Hearts Reserved
 </footer>
+
 </body>
 </html>
