@@ -472,3 +472,230 @@ updateCoins();
 </script>
 
 all hearts reserved 
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>K-HEARTS Official</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Georgia, serif;
+  background:linear-gradient(to bottom,#fff0f5,#ffe4ec);
+  text-align:center;
+  color:#ff1493;
+}
+
+nav{
+  background:white;
+  padding:15px;
+  position:sticky;
+  top:0;
+}
+
+nav button{
+  margin:5px;
+  padding:8px 15px;
+  border:none;
+  background:hotpink;
+  color:white;
+  border-radius:20px;
+}
+
+.page{display:none;padding:20px;}
+.active{display:block;}
+
+#coinsDisplay{
+  position:fixed;
+  top:10px;
+  right:15px;
+  font-weight:bold;
+  font-size:18px;
+}
+
+.heart{
+  position:absolute;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.merch{
+  background:white;
+  margin:10px;
+  padding:10px;
+  border-radius:15px;
+  display:inline-block;
+  box-shadow:0 5px 15px pink;
+  cursor:pointer;
+}
+
+.collection-item{
+  font-size:30px;
+  margin:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="coinsDisplay">Coins: 0</div>
+
+<nav>
+<button onclick="showPage('name')">Enter Name</button>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('games')">Games</button>
+<button onclick="showPage('store')">Merch</button>
+<button onclick="showPage('leaderboard')">Leaderboard</button>
+<button onclick="showPage('fanboard')">Fanboard</button>
+</nav>
+
+<!-- NAME PAGE -->
+<div id="name" class="page active">
+<h2>Enter Your Fan Name</h2>
+<input id="playerInput" placeholder="Your nickname">
+<br><br>
+<button onclick="register()">Start</button>
+<p id="welcome"></p>
+</div>
+
+<!-- HOME -->
+<div id="home" class="page">
+<h1>K-HEARTS</h1>
+<p>Three Hearts. One Spark.</p>
+<button onclick="reveal()">Reveal Fandom</button>
+<h2 id="fandom" style="display:none;">✨ KAES ✨</h2>
+
+<h3>Debut Countdown</h3>
+<p id="countdown"></p>
+</div>
+
+<!-- GAMES -->
+<div id="games" class="page">
+<h2>Catch The Hearts 💖</h2>
+<div id="gameArea" style="height:300px; position:relative; background:#fff0f5; border-radius:20px;"></div>
+<p>Click hearts to earn coins!</p>
+</div>
+
+<!-- STORE -->
+<div id="store" class="page">
+<h2>Virtual Merch Store</h2>
+
+<div class="merch" onclick="buy('☁️',10)">Karlyn Badge ☁️ (10 coins)</div>
+<div class="merch" onclick="buy('🎀',10)">Alyssa Ribbon 🎀 (10 coins)</div>
+<div class="merch" onclick="buy('🥟',10)">Trixie Dumpling 🥟 (10 coins)</div>
+<div class="merch" onclick="buy('💿',20)">Animated CD 💿 (20 coins)</div>
+
+<h3>My Collection</h3>
+<div id="collection"></div>
+</div>
+
+<!-- LEADERBOARD -->
+<div id="leaderboard" class="page">
+<h2>Top KAES Fans</h2>
+<div id="leaderboardList"></div>
+</div>
+
+<!-- FANBOARD -->
+<div id="fanboard" class="page">
+<h2>Fanboard</h2>
+<input id="fanMessage" placeholder="always stay strong! khearts coming soon!">
+<button onclick="postMessage()">Post</button>
+<div id="messages"></div>
+</div>
+
+<script>
+let coins=0;
+let player="";
+let players=[];
+
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function register(){
+  let name=document.getElementById("playerInput").value;
+  if(name==="") return alert("Enter your name first!");
+  player=name;
+  players.push({name:player,coins:0,items:[]});
+  document.getElementById("welcome").innerText="Welcome "+player+"!";
+}
+
+function updateCoins(){
+  document.getElementById("coinsDisplay").innerText="Coins: "+coins;
+  let p=players.find(x=>x.name===player);
+  if(p){p.coins=coins;}
+  updateLeaderboard();
+}
+
+function updateLeaderboard(){
+  let list=document.getElementById("leaderboardList");
+  list.innerHTML="";
+  players.sort((a,b)=>b.coins-a.coins);
+  players.forEach((p,i)=>{
+    list.innerHTML+=`${i+1}. ${p.name} - ${p.coins} coins<br>`;
+  });
+}
+
+function spawnHeart(){
+  let heart=document.createElement("div");
+  heart.innerText="💖";
+  heart.className="heart";
+  heart.style.left=Math.random()*250+"px";
+  heart.style.top=Math.random()*250+"px";
+  heart.onclick=function(){
+    coins++;
+    updateCoins();
+    heart.remove();
+  };
+  document.getElementById("gameArea").appendChild(heart);
+  setTimeout(()=>heart.remove(),2000);
+}
+setInterval(spawnHeart,1000);
+
+function buy(item,cost){
+  if(player==="") return alert("Enter your name first!");
+  if(coins>=cost){
+    coins-=cost;
+    updateCoins();
+    let p=players.find(x=>x.name===player);
+    p.items.push(item);
+    let span=document.createElement("span");
+    span.className="collection-item";
+    span.innerText=item;
+    document.getElementById("collection").appendChild(span);
+  } else {
+    alert("Not enough coins!");
+  }
+}
+
+function postMessage(){
+  let msg=document.getElementById("fanMessage").value;
+  if(msg!==""){
+    let div=document.createElement("div");
+    div.innerText=msg;
+    div.style.margin="10px";
+    document.getElementById("messages").appendChild(div);
+    document.getElementById("fanMessage").value="";
+  }
+}
+
+function reveal(){
+  document.getElementById("fandom").style.display="block";
+}
+
+let debut=new Date();
+debut.setDate(debut.getDate()+30);
+setInterval(function(){
+  let now=new Date();
+  let diff=debut-now;
+  let days=Math.floor(diff/(1000*60*60*24));
+  document.getElementById("countdown").innerText=days+" days until debut!";
+},1000);
+</script>
+
+</body>
+</html>
+
