@@ -1,69 +1,130 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K-Hearts Fan Universe Stage 1</title>
+<title>K-Hearts Fan Universe</title>
 <style>
 body{margin:0;padding:0;font-family:sans-serif;background:#ffe6f0;color:#000;}
 nav{display:flex;gap:5px;background:#ffb6c1;padding:5px;justify-content:center;flex-wrap:wrap;}
 nav button{padding:5px 10px;background:#fff0f5;border:none;border-radius:5px;cursor:pointer;}
 .page{display:none;padding:10px;}
-.avatar-container{position:relative;width:150px;height:300px;margin:10px;border:2px solid #ff99ff;border-radius:10px;background:#fff0f5;}
-.avatar-part{position:absolute;}
-.outfit-torso{width:100%;height:50%;top:100px;background:#ffb6c1;}
-.outfit-bottom{width:100%;height:50%;top:200px;background:#ff99ff;}
-.hair{top:0;width:100%;height:100px;background:#ff66b2;}
-.pet{position:absolute;bottom:10px;left:10px;font-size:30px;}
+h2,h1{color:#ff3399;text-align:center;}
+#faceContainer{position:relative;width:200px;height:200px;margin:10px auto;background:#ffe0f5;border-radius:50%;border:2px solid #ff99ff;}
+.face-part{position:absolute;text-align:center;width:100%;}
+#hair{top:0;height:60px;background:#ff66b2;border-radius:50%;}
+#eyes{top:70px;height:30px;font-size:24px;}
+#blush{top:110px;height:20px;font-size:24px;color:#ff9999;}
+#mouth{top:130px;height:30px;font-size:24px;}
+#accessory{top:10px;right:10px;font-size:24px;position:absolute;}
+#petContainer{margin:10px auto;text-align:center;font-size:50px;}
+button.itemBtn{margin:2px;padding:5px;}
+#chatWindow{height:150px;overflow-y:auto;border:1px solid #ff99ff;padding:5px;margin-bottom:5px;}
+#lyricsArea{height:200px;overflow-y:auto;border:1px solid #ff99ff;padding:5px;margin-bottom:5px;}
 </style>
 </head>
 <body>
 
 <nav>
-<button onclick="showPage('homePage')">Home</button>
-<button onclick="showPage('membersPage')">Members</button>
-<button onclick="showPage('avatarPage')">Avatar</button>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('members')">Members</button>
+<button onclick="showPage('avatar')">Avatar</button>
+<button onclick="showPage('shop')">Shop</button>
+<button onclick="showPage('pets')">Pets</button>
+<button onclick="showPage('lyrics')">Lyrics</button>
+<button onclick="showPage('chat')">Chat</button>
+<button onclick="showPage('leaderboard')">Leaderboard</button>
 </nav>
 
 <!-- HOME PAGE -->
-<div id="homePage" class="page" style="display:block;">
-<h1 style="text-align:center;color:#ff66b2;">💖 Welcome to K-Hearts Fan Universe 💖</h1>
-<p style="text-align:center;">✨ KAES Fandom Name Reveal: <span id="fandomReveal">???</span> ✨</p>
-<button onclick="revealFandom()">Reveal KAES</button>
+<div id="home" class="page" style="display:block;">
+<h1>💖 Welcome to K-Hearts Fan Universe 💖</h1>
+<p style="text-align:center;">Fandom Name Reveal: <span id="fandomReveal">???</span></p>
+<button onclick="document.getElementById('fandomReveal').innerText='KAES';">Reveal KAES</button>
 <p style="text-align:center;font-size:20px;color:#ff3399;">Always stay strong! K-Hearts coming soon!</p>
 </div>
 
 <!-- MEMBERS PAGE -->
-<div id="membersPage" class="page">
+<div id="members" class="page">
 <h2>🌸 Meet the Members</h2>
 <div id="memberList"></div>
 </div>
 
 <!-- AVATAR PAGE -->
-<div id="avatarPage" class="page">
-<h2>🎀 Your Avatar</h2>
-<div class="avatar-container" id="avatarContainer">
-<div class="avatar-part hair" id="hair"></div>
-<div class="avatar-part outfit-torso" id="torso"></div>
-<div class="avatar-part outfit-bottom" id="bottom"></div>
-<div class="avatar-part pet" id="pet">🐧</div>
+<div id="avatar" class="page">
+<h2>🎀 Your Face Avatar</h2>
+<div id="faceContainer">
+<div id="hair" class="face-part"></div>
+<div id="eyes" class="face-part">👀 👀</div>
+<div id="blush" class="face-part">😊 😊</div>
+<div id="mouth" class="face-part">😄</div>
+<div id="accessory" class="face-part">📱</div>
 </div>
 <p>Coins: <span id="coins">0</span> | Badges: <span id="badges">None</span></p>
 </div>
 
+<!-- SHOP PAGE -->
+<div id="shop" class="page">
+<h2>🛒 Shop</h2>
+<button class="itemBtn" onclick="buyItem('Pink Hair','hair','#ff66b2',10)">Pink Hair - 10 Coins</button>
+<button class="itemBtn" onclick="buyItem('Blue Hair','hair','#66ccff',10)">Blue Hair - 10 Coins</button>
+<button class="itemBtn" onclick="buyItem('Blush','blush','😊',5)">Blush - 5 Coins</button>
+<button class="itemBtn" onclick="buyItem('Red Blush','blush','😍',5)">Red Blush - 5 Coins</button>
+<button class="itemBtn" onclick="buyItem('Phone','accessory','📱',15)">Phone - 15 Coins</button>
+<button class="itemBtn" onclick="buyItem('Headphones','accessory','🎧',15)">Headphones - 15 Coins</button>
+</div>
+
+<!-- PETS PAGE -->
+<div id="pets" class="page">
+<h2>🐾 Your Pet</h2>
+<div id="petContainer">🐧</div>
+<button onclick="petAction('play')">Play with Ball 🎾</button>
+<button onclick="petAction('bathe')">Bathe 🛁</button>
+<p>Happiness: <span id="petHappiness">50</span>/100</p>
+</div>
+
+<!-- LYRICS PAGE -->
+<div id="lyrics" class="page">
+<h2>🎵 No Limits Lyrics</h2>
+<div id="lyricsArea">
+<p>No limits<br>No pressure<br>No ceiling<br>We go up</p>
+<p>Walk in like a headline, cameras all flash<br>Step so sharp, make the whole world crash<br>Different languages, same ambition<br>Born to win — that’s the only mission</p>
+<p>Mirror mirror, we don’t compete<br>We break the glass in designer feet<br>No permission, we elevate<br>Watch how legends are made</p>
+<p>We don’t bend, we don’t break<br>Pressure turns to diamonds in our wake<br>Every scar is a shining mark<br>Strike a match — ignite the dark</p>
+<p>We go higher, higher<br>Touch the sky, no ceiling<br>Fearless fire, fire<br>Got the whole world feeling</p>
+<p>No doubts, no fear<br>We came too far to disappear<br>Global girls, we redefine<br>Step aside — the crown is mine</p>
+<!-- Add remaining lyrics similarly -->
+</div>
+</div>
+
+<!-- CHAT PAGE -->
+<div id="chat" class="page">
+<h2>💌 Chat with Idols</h2>
+<div id="chatWindow"></div>
+<input type="text" id="chatInput" placeholder="Say something...">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+<!-- LEADERBOARD PAGE -->
+<div id="leaderboard" class="page">
+<h2>🏆 Leaderboard</h2>
+<div id="leaderboardList"></div>
+</div>
+
 <script>
-// ==== DATA STORAGE ====
+// ==== INITIAL DATA ====
 if(!localStorage.getItem('kheartsData')){
 localStorage.setItem('kheartsData',JSON.stringify({
-username:'',coins:0,badges:[],outfitColor:'#ffb6c1',hairColor:'#ff66b2',pet:'🐧'}));
+username:'',coins:0,badges:[],hairColor:'#ff66b2',blush:'😊',accessory:'📱',pet:'🐧',petHappiness:50,chat:[]}));
 }
 let data=JSON.parse(localStorage.getItem('kheartsData'));
 
-// ==== MEMBERS PAGE ====
+// ==== MEMBERS DATA ====
 const members=[
 {name:'Karlyn',role:'Leader, Main Rapper, Lead Dancer, Sub Vocalist',pet:'🐧',fav:'White, Japanese food, Penguins, Popmarts (Crybabies)'},
-{name:'Alyssa',role:'Visual, Main Vocalist, Sub Rapper',pet:'🐶',fav:'Pink, Coquette girl, Loves IVE, Collects cute items'},
-{name:'Trixie',role:'Main Dancer, Lead Rapper, Sub Vocalist',pet:'🐱',fav:'Wushu pants, comfy fits, Loves SKZ and NJZ'}
+{name:'Trixie',role:'Centre, Sub Rapper, Main Dancer, Sub Vocalist',pet:'🐱',fav:'Comfy clothes, SKZ & NJZ'},
+{name:'Hayley',role:'Lead Dancer, Lead Vocalist, Maknae',pet:'🐧',fav:'Black, Stray Kids'},
+{name:'Alyssa',role:'Main Vocalist, Visual, Sub Rapper & Sub Dancer',pet:'🐶',fav:'Pink, Coquette style, IVE'}
 ];
 function updateMembers(){
 let list=document.getElementById('memberList');
@@ -75,30 +136,82 @@ list.appendChild(div);
 });
 }
 
-// ==== GENERAL FUNCTIONS ====
-function saveData(){localStorage.setItem('kheartsData',JSON.stringify(data));updateDisplay();}
+// ==== DISPLAY FUNCTIONS ====
 function updateDisplay(){
 document.getElementById('coins').innerText=data.coins;
 document.getElementById('badges').innerText=data.badges.join(', ')||'None';
-document.getElementById('torso').style.backgroundColor=data.outfitColor;
-document.getElementById('bottom').style.backgroundColor='#ff99ff';
 document.getElementById('hair').style.backgroundColor=data.hairColor;
-document.getElementById('pet').innerText=data.pet;
+document.getElementById('blush').innerText=data.blush;
+document.getElementById('accessory').innerText=data.accessory;
+document.getElementById('petContainer').innerText=data.pet;
+document.getElementById('petHappiness').innerText=data.petHappiness;
 updateMembers();
+updateLeaderboard();
+updateChatWindow();
 }
 function showPage(id){
 document.querySelectorAll('.page').forEach(p=>p.style.display='none');
 document.getElementById(id).style.display='block';
 }
 
-// ==== FAN NAME REVEAL ====
-function revealFandom(){document.getElementById('fandomReveal').innerText='KAES';}
+// ==== SHOP ====
+function buyItem(name,part,value,cost){
+if(data.coins<cost){alert('Not enough coins!'); return;}
+data.coins-=cost;
+if(part==='hair') data.hairColor=value;
+if(part==='blush') data.blush=value;
+if(part==='accessory') data.accessory=value;
+alert(`Purchased ${name}!`);
+saveData(); updateDisplay();
+}
+
+// ==== PET ACTION ====
+function petAction(action){
+if(action==='play'){data.petHappiness=Math.min(100,data.petHappiness+10); alert('You played with your pet!');}
+if(action==='bathe'){data.petHappiness=Math.min(100,data.petHappiness+15); alert('You bathed your pet!');}
+saveData(); updateDisplay();
+}
+
+// ==== CHAT ====
+function updateChatWindow(){
+let win=document.getElementById('chatWindow');
+win.innerHTML='';
+data.chat.forEach(msg=>{let p=document.createElement('p');p.innerHTML=msg;win.appendChild(p);});
+win.scrollTop=win.scrollHeight;
+}
+function sendMessage(){
+let input=document.getElementById('chatInput');
+if(input.value.trim()==='') return;
+let userMsg=`<b>${data.username}:</b> ${input.value}`;
+data.chat.push(userMsg);
+let idolReplies=[
+`Karlyn waves at you!`,
+`Trixie smiles!`,
+`Hayley cheers!`,
+`Alyssa claps!`,
+`Your coins: ${data.coins}`,
+`Your badges: ${data.badges.join(',')||'None'}`
+];
+data.chat.push('<b>Idol:</b> '+idolReplies[Math.floor(Math.random()*idolReplies.length)]);
+saveData(); updateChatWindow();
+input.value='';
+}
+
+// ==== LEADERBOARD ====
+if(!localStorage.getItem('kheartsLeaderboard')) localStorage.setItem('kheartsLeaderboard','[]');
+function updateLeaderboard(){
+let list=JSON.parse(localStorage.getItem('kheartsLeaderboard'));
+let found=list.find(u=>u.name===data.username);
+if(found){found.coins=data.coins;} else {list.push({name:data.username,coins:data.coins});}
+list.sort((a,b)=>b.coins-a.coins);
+localStorage.setItem('kheartsLeaderboard',JSON.stringify(list));
+let lb=document.getElementById('leaderboardList'); lb.innerHTML='';
+list.forEach((u,i)=>{let p=document.createElement('p'); p.innerText=(i+1)+". "+u.name+" — "+u.coins+" coins"; lb.appendChild(p);});
+}
 
 // ==== INITIALIZE USERNAME ====
-if(!data.username){
-data.username=prompt("Enter your KAES fan name:");
-saveData();
-}
+if(!data.username){data.username=prompt("Enter your fan name:"); saveData();}
+function saveData(){localStorage.setItem('kheartsData',JSON.stringify(data));}
 
 // ==== INITIAL DISPLAY ====
 updateDisplay();
@@ -106,222 +219,3 @@ updateDisplay();
 
 </body>
 </html>
-
-<script>
-// ==== QUIZZES ====
-const quizzes=[
-{
-member:'Karlyn',
-questions:[
-{q:'Favorite color?', options:['White','Pink','Blue'], answer:'White'},
-{q:'Favorite food?', options:['Sushi','Pizza','Ramen'], answer:'Sushi'},
-{q:'Favorite animal?', options:['Penguin','Dog','Cat'], answer:'Penguin'}
-]
-},
-{
-member:'Alyssa',
-questions:[
-{q:'Favorite color?', options:['White','Pink','Red'], answer:'Pink'},
-{q:'Favorite type of girl?', options:['Coquette','Cool','Sporty'], answer:'Coquette'},
-{q:'Favorite group?', options:['IVE','Blackpink','BTS'], answer:'IVE'}
-]
-},
-{
-member:'Trixie',
-questions:[
-{q:'Favorite clothing?', options:['Wushu pants','Jeans','Skirt'], answer:'Wushu pants'},
-{q:'Favorite group?', options:['SKZ','IVE','TXT'], answer:'SKZ'},
-{q:'Favorite food?', options:['Any','Sushi','Pizza'], answer:'Any'}
-]
-}
-];
-
-function playQuiz(){
-let memberQuiz=quizzes[Math.floor(Math.random()*quizzes.length)];
-let score=0;
-for(let i=0;i<memberQuiz.questions.length;i++){
-let q=memberQuiz.questions[i];
-let userAns=prompt(`${memberQuiz.member} Quiz:\n${q.q}\nOptions: ${q.options.join(', ')}`);
-if(userAns && userAns.toLowerCase()===q.answer.toLowerCase()){
-score++; alert('Correct!'); 
-}else{alert('Oops! Correct answer: '+q.answer);}
-}
-// Reward
-if(score===memberQuiz.questions.length){
-let badge='';
-if(memberQuiz.member==='Karlyn') badge='☁️';
-if(memberQuiz.member==='Alyssa') badge='🎀';
-if(memberQuiz.member==='Trixie') badge='🥟';
-if(!data.badges.includes(badge)) data.badges.push(badge);
-data.coins+=50; // reward coins
-alert(`Perfect! You earned 50 coins + badge ${badge}!`);
-}else{
-data.coins+=score*10; // partial coins
-alert(`You got ${score} correct. Coins earned: ${score*10}`);
-}
-saveData();
-}
-
-// ==== SIMPLE MINI-GAMES ====
-function playBeatGame(){alert("🎵 Rhythm Tap! You earned 20 coins!"); data.coins+=20; saveData(); updateDisplay();}
-function playDanceBattle(){alert("💃 Dance Battle! You earned 30 coins!"); data.coins+=30; saveData(); updateDisplay();}
-function playHeartCatch(){alert("💖 Heart Catch! You earned 25 coins!"); data.coins+=25; saveData(); updateDisplay();}
-</script>
-
-<script>
-// ==== SHOP ITEMS ====
-const shopItems=[
-{name:'Glitter Dress',cost:40,type:'outfit',color:'#ff99ff'},
-{name:'Comfy Hoodie',cost:20,type:'outfit',color:'#ffb6c1'},
-{name:'Pink Lightstick',cost:30,type:'prop',symbol:'✨'},
-{name:'Penguin Pet',cost:25,type:'pet',symbol:'🐧'},
-{name:'Dog Pet',cost:25,type:'pet',symbol:'🐶'},
-{name:'Cat Pet',cost:25,type:'pet',symbol:'🐱'}
-];
-
-function buyItem(name){
-let item=shopItems.find(i=>i.name===name);
-if(!item){alert('Item not found!'); return;}
-if(data.coins<item.cost){alert('Not enough coins!'); return;}
-data.coins-=item.cost;
-
-// Apply item
-if(item.type==='outfit'){data.outfitColor=item.color;}
-if(item.type==='pet'){data.pet=item.symbol;}
-if(item.type==='prop'){alert('You got the '+name+'!');} // can add more prop effects
-alert('Purchased '+name+'!');
-saveData();
-updateDisplay();
-}
-
-// ==== LEADERBOARD ====
-if(!localStorage.getItem('kheartsLeaderboard')) localStorage.setItem('kheartsLeaderboard',JSON.stringify([]));
-function updateLeaderboard(){
-let lb=document.getElementById('dailyBoard'); if(!lb) return;
-let list=JSON.parse(localStorage.getItem('kheartsLeaderboard'));
-let found=list.find(u=>u.name===data.username);
-if(found){found.coins=data.coins;} else {list.push({name:data.username,coins:data.coins});}
-list.sort((a,b)=>b.coins-a.coins);
-localStorage.setItem('kheartsLeaderboard',JSON.stringify(list));
-lb.innerHTML='';
-list.forEach((u,i)=>{let p=document.createElement('p'); p.innerText=(i+1)+". "+u.name+" — "+u.coins+" coins"; lb.appendChild(p);});
-}
-
-// ==== INITIAL DISPLAY UPDATE ====
-updateLeaderboard();
-</script>
-
-<script>
-// ==== AVATAR LAYERING ====
-function setAvatarLayer(outfitColor, hairColor, petSymbol){
-document.getElementById('torso').style.backgroundColor=outfitColor||'#ffb6c1';
-document.getElementById('bottom').style.backgroundColor='#ff99ff';
-document.getElementById('hair').style.backgroundColor=hairColor||'#ff66b2';
-document.getElementById('pet').innerText=petSymbol||'🐧';
-}
-
-// ==== FULL AVATAR UPDATE ====
-function updateAvatar(){
-setAvatarLayer(data.outfitColor,data.hairColor,data.pet);
-updateDisplay();
-}
-
-// ==== MINI-GAMES FULL FUNCTIONAL ====
-function playBeatGame(){
-let earned=Math.floor(Math.random()*30)+20;
-alert(`🎵 Rhythm Tap! You earned ${earned} coins!`);
-data.coins+=earned;
-saveData(); updateAvatar(); updateLeaderboard(); showConfetti();
-}
-function playDanceBattle(){
-let earned=Math.floor(Math.random()*40)+20;
-alert(`💃 Dance Battle! You earned ${earned} coins!`);
-data.coins+=earned;
-saveData(); updateAvatar(); updateLeaderboard(); showConfetti();
-}
-function playHeartCatch(){
-let earned=Math.floor(Math.random()*35)+15;
-alert(`💖 Heart Catch! You earned ${earned} coins!`);
-data.coins+=earned;
-saveData(); updateAvatar(); updateLeaderboard(); showConfetti();
-}
-
-// ==== QUIZZES FULL FUNCTIONAL ====
-function playQuiz(){
-let memberQuiz=quizzes[Math.floor(Math.random()*quizzes.length)];
-let score=0;
-for(let i=0;i<memberQuiz.questions.length;i++){
-let q=memberQuiz.questions[i];
-let userAns=prompt(`${memberQuiz.member} Quiz:\n${q.q}\nOptions: ${q.options.join(', ')}`);
-if(userAns && userAns.toLowerCase()===q.answer.toLowerCase()){
-score++; alert('Correct!'); 
-}else{alert('Oops! Correct answer: '+q.answer);}
-}
-let badge='';
-if(score===memberQuiz.questions.length){
-if(memberQuiz.member==='Karlyn') badge='☁️';
-if(memberQuiz.member==='Alyssa') badge='🎀';
-if(memberQuiz.member==='Trixie') badge='🥟';
-if(!data.badges.includes(badge)) data.badges.push(badge);
-data.coins+=50; alert(`Perfect! You earned 50 coins + badge ${badge}!`);
-}else{
-data.coins+=score*10; alert(`You got ${score} correct. Coins earned: ${score*10}`);
-}
-saveData(); updateAvatar(); updateLeaderboard(); showConfetti();
-}
-
-// ==== CHAT FULL FUNCTIONAL ====
-function updateChatWindow(){
-let chatWin=document.getElementById('chatWindow'); 
-chatWin.innerHTML='';
-data.chat.forEach(msg=>{
-let p=document.createElement('p'); p.innerHTML=msg; chatWin.appendChild(p);
-}); chatWin.scrollTop=chatWin.scrollHeight;
-}
-
-function sendMessage(){
-let input=document.getElementById('chatInput');
-if(input.value.trim()===''){return;}
-let userMsg=`<b>${data.username}:</b> ${input.value}`;
-data.chat.push(userMsg);
-
-// Personalized idol responses
-let idolResponses=[
-`☁️ Karlyn waves at you wearing your outfit!`,
-`🎀 Alyssa wags her pet dog at you!`,
-`🥟 Trixie purrs with her cat!`,
-`💖 You have ${data.coins} coins now! Keep going!`,
-`✨ Your badges: ${data.badges.join(', ')||'None'} shine brightly!`,
-`🌸 Your avatar looks amazing today!`
-];
-let idolReply="<b>Idol:</b> "+idolResponses[Math.floor(Math.random()*idolResponses.length)];
-data.chat.push(idolReply);
-saveData(); updateChatWindow(); input.value='';
-}
-
-// ==== CONFETTI ====
-const canvas=document.getElementById('confettiCanvas'); const ctx=canvas.getContext('2d');
-canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-let confetti=[];
-for(let i=0;i<150;i++){
-confetti.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*6+2,dx:(Math.random()-0.5)*2,dy:Math.random()*3+2,color:`hsl(${Math.random()*360},100%,70%)`});
-}
-function drawConfetti(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-confetti.forEach(c=>{
-ctx.fillStyle=c.color;
-ctx.beginPath();
-ctx.arc(c.x,c.y,c.r,0,2*Math.PI);
-ctx.fill();
-c.x+=c.dx; c.y+=c.dy;
-if(c.y>canvas.height){c.y=0;c.x=Math.random()*canvas.width;}
-});
-requestAnimationFrame(drawConfetti);
-}
-drawConfetti();
-function showConfetti(){for(let i=0;i<50;i++){confetti.push({x:Math.random()*canvas.width,y:0,r:Math.random()*6+2,dx:(Math.random()-0.5)*2,dy:(Math.random()*3)+2,color:`hsl(${Math.random()*360},100%,70%)`});}}
-
-// ==== INITIALIZE ====
-updateAvatar(); updateChatWindow(); updateLeaderboard();
-</script>
-
