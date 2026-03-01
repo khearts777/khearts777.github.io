@@ -24,7 +24,7 @@ top:0;
 nav button{
 margin:5px;
 padding:8px 15px;
-background:white;
+background:pink;
 color:black;
 border:none;
 border-radius:20px;
@@ -39,12 +39,34 @@ font-size:40px;
 background:linear-gradient(45deg,pink,white);
 -webkit-background-clip:text;
 color:transparent;
-animation:glow 2s infinite alternate;
 }
 
-@keyframes glow{
-from{text-shadow:0 0 10px pink;}
-to{text-shadow:0 0 25px white;}
+button{
+padding:10px 18px;
+margin:5px;
+border-radius:20px;
+border:none;
+cursor:pointer;
+background:pink;
+color:black;
+}
+
+.choiceBtn{
+background:white;
+color:black;
+}
+
+.shop-box{
+background:#222;
+margin:10px auto;
+padding:15px;
+width:300px;
+border-radius:20px;
+}
+
+.avatar{
+font-size:80px;
+margin:20px;
 }
 
 .heart{
@@ -58,42 +80,20 @@ from{transform:translateY(100vh);}
 to{transform:translateY(-10vh);}
 }
 
-button.big{
-padding:15px 25px;
-font-size:18px;
-border-radius:25px;
-background:pink;
-color:black;
-border:none;
-cursor:pointer;
-margin:10px;
-}
-
-input{
-padding:8px;
-border-radius:15px;
-border:none;
-text-align:center;
-}
-
-.badge{
-font-size:40px;
-margin:10px;
-}
-
-.shop-item{
+.levelBarOuter{
+width:80%;
+height:20px;
 background:#222;
-margin:10px;
-padding:15px;
-border-radius:15px;
+margin:10px auto;
+border-radius:20px;
 }
 
-.leaderboard-box{
-background:#111;
-margin:10px auto;
-padding:15px;
-width:300px;
+.levelBarInner{
+height:100%;
+width:0%;
+background:pink;
 border-radius:20px;
+transition:0.5s;
 }
 </style>
 </head>
@@ -103,97 +103,148 @@ border-radius:20px;
 <nav>
 <button onclick="showPage('home')">Home</button>
 <button onclick="showPage('games')">Games</button>
-<button onclick="showPage('shop')">Merch</button>
-<button onclick="showPage('collection')">Collection</button>
+<button onclick="showPage('avatar')">Avatar</button>
+<button onclick="showPage('shop')">Shop</button>
+<button onclick="showPage('members')">Members</button>
+<button onclick="showPage('fandom')">Fandom</button>
 <button onclick="showPage('leaderboard')">Leaderboard</button>
-<button onclick="showPage('lyrics')">No Limits</button>
-<button onclick="showPage('fanboard')">Fanboard</button>
 </nav>
 
 <div id="coinsDisplay">Coins: 0</div>
+<div id="levelDisplay">Level 1 — Rookie</div>
+
+<div class="levelBarOuter">
+<div id="levelBar" class="levelBarInner"></div>
+</div>
 
 <!-- HOME -->
 <div id="home" class="page active">
 <h1>K-HEARTS</h1>
 <p>Always stay strong! K-Hearts coming soon!</p>
-<h2 id="countdown"></h2>
 </div>
 
 <!-- GAMES -->
 <div id="games" class="page">
-<h2>Click The Hearts!</h2>
-<button class="big" onclick="startGame()">Start Game</button>
+
+<h2>💖 Click Heart Game</h2>
+<button onclick="startHearts()">Start</button>
 <div id="gameArea"></div>
 
-<h2>Member Quiz</h2>
-<button onclick="quizKarlyn()">Karlyn Quiz</button>
-<button onclick="quizAlyssa()">Alyssa Quiz</button>
-<button onclick="quizTrixie()">Trixie Quiz</button>
-<div id="quizResult"></div>
+<h2>☁️ Karlyn Quiz</h2>
+<div id="quiz1"></div>
+
+<h2>🎀 Alyssa Quiz</h2>
+<div id="quiz2"></div>
+
+<h2>🥟 Trixie Quiz</h2>
+<div id="quiz3"></div>
+
+</div>
+
+<!-- AVATAR -->
+<div id="avatar" class="page">
+<h2>Fan Avatar</h2>
+<div class="avatar">🙂</div>
+<p>Outfit: <span id="outfitDisplay">Basic</span></p>
+<div id="lightstickDisplay" style="font-size:60px;"></div>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="page">
-<h2>Merch Exchange</h2>
+<h2>Avatar Outfit Shop</h2>
 
-<div class="shop-item">
-<p>K-Hearts Emoji Pack ☁️🎀🥟</p>
-<button onclick="buyItem('Emoji Pack',50)">50 Coins</button>
+<div class="shop-box">
+<p>Pink Bow Outfit 🎀 (30 coins)</p>
+<button onclick="buyOutfit('🎀 Coquette',30)">Buy</button>
 </div>
 
-<div class="shop-item">
-<p>Animated CD 💿</p>
-<button onclick="buyItem('Animated CD',80)">80 Coins</button>
+<div class="shop-box">
+<p>Penguin Hoodie 🐧 (40 coins)</p>
+<button onclick="buyOutfit('🐧 Penguin',40)">Buy</button>
 </div>
 
-<div class="shop-item">
-<p>Digital Lightstick ✨</p>
-<button onclick="buyItem('Lightstick',100)">100 Coins</button>
+<div class="shop-box">
+<p>Stage Queen Fit 👑 (60 coins)</p>
+<button onclick="buyOutfit('👑 Queen',60)">Buy</button>
+</div>
+
+<div class="shop-box">
+<p>Official Pink Lightstick 💗 (Level 5)</p>
+<button onclick="unlockLightstick()">Unlock</button>
 </div>
 
 </div>
 
-<!-- COLLECTION -->
-<div id="collection" class="page">
-<h2>My Collection</h2>
-<div id="myCollection"></div>
+<!-- MEMBERS -->
+<div id="members" class="page">
+<h2>K-Hearts Members</h2>
+
+<h3>Karlyn</h3>
+<p>Leader • Main Rapper • Vision Queen ☁️</p>
+
+<h3>Alyssa</h3>
+<p>Main Vocal • Visual • Coquette Princess 🎀</p>
+
+<h3>Trixie</h3>
+<p>Main Dancer • Performance Queen • Variety Star 🥟</p>
+</div>
+
+<!-- FANDOM -->
+<div id="fandom" class="page">
+<h2>Fandom Name Reveal</h2>
+<button onclick="revealFandom()">Reveal</button>
+<h1 id="fandomName" style="display:none;color:pink;"></h1>
+<p id="fandomDesc"></p>
 </div>
 
 <!-- LEADERBOARD -->
 <div id="leaderboard" class="page">
-<h2>Enter Your Name</h2>
-<input id="username" placeholder="Your name">
+<input id="username" placeholder="Your Name">
 <button onclick="saveName()">Submit</button>
-
-<div class="leaderboard-box">
-<h3>Top Fans</h3>
 <div id="leaderboardList"></div>
-</div>
-</div>
-
-<!-- LYRICS -->
-<div id="lyrics" class="page">
-<h2>No Limits</h2>
-<div id="lyricsBox"></div>
-<button onclick="startLyrics()">Play Lyrics</button>
-</div>
-
-<!-- FANBOARD -->
-<div id="fanboard" class="page">
-<h2>Fan Messages</h2>
-<input id="fanMsg" placeholder="Write your message">
-<button onclick="addMessage()">Post</button>
-<div id="messages"></div>
 </div>
 
 <script>
+
 let coins=0;
-let collection=[];
-let username="";
+let avatarOutfit="Basic";
 let leaderboard=[];
+let hasLightstick=false;
+
+let titles=[
+"Rookie",
+"Trainee",
+"Rising Star",
+"Performer",
+"Stage Slayer",
+"Icon",
+"Global Glow",
+"Elite KAES",
+"Legend",
+"Ultimate KAES"
+];
 
 function updateCoins(){
 document.getElementById("coinsDisplay").innerText="Coins: "+coins;
+updateLevel();
+}
+
+function updateLevel(){
+let level=Math.floor(coins/50)+1;
+if(level>10) level=10;
+
+let progress=(coins%50)*2;
+if(level==10) progress=100;
+
+document.getElementById("levelDisplay").innerText=
+"Level "+level+" — "+titles[level-1];
+
+document.getElementById("levelBar").style.width=progress+"%";
+
+if(level==10 && hasLightstick){
+document.getElementById("lightstickDisplay").innerHTML=
+"<span style='color:hotpink;text-shadow:0 0 30px pink,0 0 60px hotpink;'>🔆💗🔆</span>";
+}
 }
 
 function showPage(id){
@@ -201,7 +252,7 @@ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-function startGame(){
+function startHearts(){
 let area=document.getElementById("gameArea");
 area.innerHTML="";
 for(let i=0;i<10;i++){
@@ -217,182 +268,6 @@ heart.remove();
 area.appendChild(heart);
 }
 }
-
-function buyItem(item,cost){
-if(coins>=cost){
-coins-=cost;
-collection.push(item);
-updateCoins();
-updateCollection();
-alert("You got "+item+"!");
-}else{
-alert("Not enough coins!");
-}
-}
-
-function updateCollection(){
-let box=document.getElementById("myCollection");
-box.innerHTML="";
-collection.forEach(i=>{
-let div=document.createElement("div");
-div.innerText=i;
-box.appendChild(div);
-});
-}
-
-function saveName(){
-username=document.getElementById("username").value;
-leaderboard.push({name:username,score:coins});
-updateLeaderboard();
-}
-
-function updateLeaderboard(){
-let list=document.getElementById("leaderboardList");
-list.innerHTML="";
-leaderboard.sort((a,b)=>b.score-a.score);
-leaderboard.forEach(player=>{
-let div=document.createElement("div");
-div.innerText=player.name+" - "+player.score+" coins";
-list.appendChild(div);
-});
-}
-
-function quizKarlyn(){
-let ans=prompt("What is Karlyn's fav colour?");
-if(ans && ans.toLowerCase()=="white"){
-document.getElementById("quizResult").innerHTML="Correct! ☁️ Badge Unlocked!";
-}else{
-alert("Wrong!");
-}
-}
-
-function quizAlyssa(){
-let ans=prompt("What colour does Alyssa love?");
-if(ans && ans.toLowerCase()=="pink"){
-document.getElementById("quizResult").innerHTML="Correct! 🎀 Badge Unlocked!";
-}else{
-alert("Wrong!");
-}
-}
-
-function quizTrixie(){
-let ans=prompt("What does Trixie love wearing?");
-if(ans && ans.toLowerCase().includes("wushu")){
-document.getElementById("quizResult").innerHTML="Correct! 🥟 Badge Unlocked!";
-}else{
-alert("Wrong!");
-}
-}
-
-let lyrics=[
-"No limits","No pressure","No ceiling","We go up",
-"Walk in like a headline",
-"Step so sharp, make the whole world crash",
-"We don’t bend, we don’t break",
-"We go higher, higher",
-"No ceiling — we climb."
-];
-
-function startLyrics(){
-let box=document.getElementById("lyricsBox");
-box.innerHTML="";
-let i=0;
-let interval=setInterval(()=>{
-if(i>=lyrics.length){clearInterval(interval);}
-else{
-let line=document.createElement("div");
-line.innerText=lyrics[i];
-line.style.animation="glow 1s alternate infinite";
-box.appendChild(line);
-i++;
-}
-},1000);
-}
-
-function addMessage(){
-let msg=document.getElementById("fanMsg").value;
-let div=document.createElement("div");
-div.innerText=msg;
-document.getElementById("messages").appendChild(div);
-}
-
-let countDownDate=new Date("Dec 31, 2026 00:00:00").getTime();
-setInterval(function(){
-let now=new Date().getTime();
-let distance=countDownDate-now;
-let days=Math.floor(distance/(1000*60*60*24));
-document.getElementById("countdown").innerText="Debut in "+days+" days!";
-},1000);
-
-updateCoins();
-</script>
-
-</body>
-</html>
-
-<script>
-
-let coins=0;
-let avatarOutfit="Basic";
-let leaderboard=[];
-
-function updateCoins(){
-document.getElementById("coinsDisplay").innerText="Coins: "+coins;
-updateLevel();
-}
-
-function showPage(id){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-}
-
-function startHearts(){
-let area=document.getElementById("gameArea");
-area.innerHTML="";
-for(let i=0;i<10;i++){
-let heart=document.createElement("div");
-heart.innerText="🩷
-  ";
-heart.className="heart";
-heart.style.left=Math.random()*90+"%";
-heart.onclick=function(){
-coins+=5;
-updateCoins();
-heart.remove();
-}
-area.appendChild(heart);
-}
-}
-
-/* LEVEL SYSTEM */
-
-let titles=[
-"Rookie",
-"Trainee",
-"Rising Star",
-"Performer",
-"Stage Slayer",
-"Icon",
-"Global Glow",
-"Elite KAES",
-"Legend",
-"Ultimate KAES"
-];
-
-function updateLevel(){
-let level=Math.floor(coins/50)+1;
-if(level>10) level=10;
-
-let progress=(coins%50)*2;
-if(level==10) progress=100;
-
-document.getElementById("levelDisplay").innerText=
-"Level "+level+" — "+titles[level-1];
-
-document.getElementById("levelBar").style.width=progress+"%";
-}
-
-/* QUIZ SYSTEM */
 
 function createQuiz(container,question,answers,correct,badge){
 let div=document.getElementById(container);
@@ -429,8 +304,6 @@ createQuiz("quiz3",
 ["Wushu pants","Jeans","Skirts"],
 0,"🥟");
 
-/* OUTFIT SHOP */
-
 function buyOutfit(name,cost){
 if(coins>=cost){
 coins-=cost;
@@ -442,7 +315,24 @@ alert("Not enough coins!");
 }
 }
 
-/* LEADERBOARD */
+function unlockLightstick(){
+let level=Math.floor(coins/50)+1;
+if(level>=5){
+hasLightstick=true;
+document.getElementById("lightstickDisplay").innerHTML=
+"<span style='color:pink;text-shadow:0 0 20px hotpink,0 0 40px pink;'>🔆💗🔆</span>";
+alert("Official Pink Lightstick Unlocked!");
+}else{
+alert("Reach Level 5 to unlock!");
+}
+}
+
+function revealFandom(){
+document.getElementById("fandomName").style.display="block";
+document.getElementById("fandomName").innerText="KAES";
+document.getElementById("fandomDesc").innerText=
+"KAES stands for K-Hearts Angels & Energy Squad. You are our power, our light, our forever.";
+}
 
 function saveName(){
 let name=document.getElementById("username").value;
@@ -471,231 +361,5 @@ updateCoins();
 
 </script>
 
-all hearts reserved 
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>K-HEARTS Official</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-  margin:0;
-  font-family:Georgia, serif;
-  background:linear-gradient(to bottom,#fff0f5,#ffe4ec);
-  text-align:center;
-  color:#ff1493;
-}
-
-nav{
-  background:white;
-  padding:15px;
-  position:sticky;
-  top:0;
-}
-
-nav button{
-  margin:5px;
-  padding:8px 15px;
-  border:none;
-  background:hotpink;
-  color:white;
-  border-radius:20px;
-}
-
-.page{display:none;padding:20px;}
-.active{display:block;}
-
-#coinsDisplay{
-  position:fixed;
-  top:10px;
-  right:15px;
-  font-weight:bold;
-  font-size:18px;
-}
-
-.heart{
-  position:absolute;
-  font-size:30px;
-  cursor:pointer;
-}
-
-.merch{
-  background:white;
-  margin:10px;
-  padding:10px;
-  border-radius:15px;
-  display:inline-block;
-  box-shadow:0 5px 15px pink;
-  cursor:pointer;
-}
-
-.collection-item{
-  font-size:30px;
-  margin:5px;
-}
-</style>
-</head>
-
-<body>
-
-<div id="coinsDisplay">Coins: 0</div>
-
-<nav>
-<button onclick="showPage('name')">Enter Name</button>
-<button onclick="showPage('home')">Home</button>
-<button onclick="showPage('games')">Games</button>
-<button onclick="showPage('store')">Merch</button>
-<button onclick="showPage('leaderboard')">Leaderboard</button>
-<button onclick="showPage('fanboard')">Fanboard</button>
-</nav>
-
-<!-- NAME PAGE -->
-<div id="name" class="page active">
-<h2>Enter Your Fan Name</h2>
-<input id="playerInput" placeholder="Your nickname">
-<br><br>
-<button onclick="register()">Start</button>
-<p id="welcome"></p>
-</div>
-
-<!-- HOME -->
-<div id="home" class="page">
-<h1>K-HEARTS</h1>
-<p>Three Hearts. One Spark.</p>
-<button onclick="reveal()">Reveal Fandom</button>
-<h2 id="fandom" style="display:none;">✨ KAES ✨</h2>
-
-<h3>Debut Countdown</h3>
-<p id="countdown"></p>
-</div>
-
-<!-- GAMES -->
-<div id="games" class="page">
-<h2>Catch The Hearts 💖</h2>
-<div id="gameArea" style="height:300px; position:relative; background:#fff0f5; border-radius:20px;"></div>
-<p>Click hearts to earn coins!</p>
-</div>
-
-<!-- STORE -->
-<div id="store" class="page">
-<h2>Virtual Merch Store</h2>
-
-<div class="merch" onclick="buy('☁️',10)">Karlyn Badge ☁️ (10 coins)</div>
-<div class="merch" onclick="buy('🎀',10)">Alyssa Ribbon 🎀 (10 coins)</div>
-<div class="merch" onclick="buy('🥟',10)">Trixie Dumpling 🥟 (10 coins)</div>
-<div class="merch" onclick="buy('💿',20)">Animated CD 💿 (20 coins)</div>
-
-<h3>My Collection</h3>
-<div id="collection"></div>
-</div>
-
-<!-- LEADERBOARD -->
-<div id="leaderboard" class="page">
-<h2>Top KAES Fans</h2>
-<div id="leaderboardList"></div>
-</div>
-
-<!-- FANBOARD -->
-<div id="fanboard" class="page">
-<h2>Fanboard</h2>
-<input id="fanMessage" placeholder="always stay strong! khearts coming soon!">
-<button onclick="postMessage()">Post</button>
-<div id="messages"></div>
-</div>
-
-<script>
-let coins=0;
-let player="";
-let players=[];
-
-function showPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
-
-function register(){
-  let name=document.getElementById("playerInput").value;
-  if(name==="") return alert("Enter your name first!");
-  player=name;
-  players.push({name:player,coins:0,items:[]});
-  document.getElementById("welcome").innerText="Welcome "+player+"!";
-}
-
-function updateCoins(){
-  document.getElementById("coinsDisplay").innerText="Coins: "+coins;
-  let p=players.find(x=>x.name===player);
-  if(p){p.coins=coins;}
-  updateLeaderboard();
-}
-
-function updateLeaderboard(){
-  let list=document.getElementById("leaderboardList");
-  list.innerHTML="";
-  players.sort((a,b)=>b.coins-a.coins);
-  players.forEach((p,i)=>{
-    list.innerHTML+=`${i+1}. ${p.name} - ${p.coins} coins<br>`;
-  });
-}
-
-function spawnHeart(){
-  let heart=document.createElement("div");
-  heart.innerText="💖";
-  heart.className="heart";
-  heart.style.left=Math.random()*250+"px";
-  heart.style.top=Math.random()*250+"px";
-  heart.onclick=function(){
-    coins++;
-    updateCoins();
-    heart.remove();
-  };
-  document.getElementById("gameArea").appendChild(heart);
-  setTimeout(()=>heart.remove(),2000);
-}
-setInterval(spawnHeart,1000);
-
-function buy(item,cost){
-  if(player==="") return alert("Enter your name first!");
-  if(coins>=cost){
-    coins-=cost;
-    updateCoins();
-    let p=players.find(x=>x.name===player);
-    p.items.push(item);
-    let span=document.createElement("span");
-    span.className="collection-item";
-    span.innerText=item;
-    document.getElementById("collection").appendChild(span);
-  } else {
-    alert("Not enough coins!");
-  }
-}
-
-function postMessage(){
-  let msg=document.getElementById("fanMessage").value;
-  if(msg!==""){
-    let div=document.createElement("div");
-    div.innerText=msg;
-    div.style.margin="10px";
-    document.getElementById("messages").appendChild(div);
-    document.getElementById("fanMessage").value="";
-  }
-}
-
-function reveal(){
-  document.getElementById("fandom").style.display="block";
-}
-
-let debut=new Date();
-debut.setDate(debut.getDate()+30);
-setInterval(function(){
-  let now=new Date();
-  let diff=debut-now;
-  let days=Math.floor(diff/(1000*60*60*24));
-  document.getElementById("countdown").innerText=days+" days until debut!";
-},1000);
-</script>
-
 </body>
 </html>
-
