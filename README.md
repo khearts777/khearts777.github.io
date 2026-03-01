@@ -2,8 +2,8 @@
 <html>
 <head>
 <title>K-HEARTS</title>
-
 <style>
+/* BODY & FONT */
 body {
   margin: 0;
   font-family: Georgia, serif;
@@ -11,63 +11,77 @@ body {
   text-align: center;
   color: #b03060;
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  cursor: url('https://i.imgur.com/WzLQwNl.png'), auto; /* optional cute cursor */
 }
 
-/* LOADING SCREEN */
-#loader {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: #fff0f5;
+/* NAVBAR */
+nav {
+  background: rgba(255,255,255,0.8);
+  padding: 15px;
+  box-shadow: 0 5px 15px rgba(255,182,193,0.4);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 40px;
+  gap: 40px;
+}
+nav a {
+  text-decoration: none;
   color: hotpink;
-  z-index: 9999;
-  animation: fadeOut 2s forwards;
-  animation-delay: 2s;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.3s;
 }
-
-@keyframes fadeOut {
-  to { opacity: 0; visibility: hidden; }
-}
-
-/* FLOATING SPARKLES */
-.sparkle {
-  position: fixed;
-  bottom: -20px;
-  animation: floatUp 10s linear infinite;
-  opacity: 0.6;
-  font-size: 20px;
-}
-
-@keyframes floatUp {
-  0% { transform: translateY(0); opacity: 0.6; }
-  100% { transform: translateY(-110vh); opacity: 0; }
-}
-
-/* HEADER */
-header {
-  padding: 80px 20px;
-}
-
-h1 {
-  font-size: 65px;
-  letter-spacing: 4px;
-  color: #ff69b4;
-  text-shadow: 0 0 20px #ffb6c1;
-}
-
-.subtitle {
-  font-size: 20px;
-}
-
-/* COUNTDOWN */
-#countdown {
-  font-size: 22px;
-  margin: 20px;
+nav a:hover {
   color: #ff1493;
+  letter-spacing: 2px;
+}
+
+/* TITLE */
+h1 {
+  font-size: 60px;
+  margin-top: 60px;
+  color: #ff69b4;
+  text-shadow: 0 0 25px #ffb6c1;
+  animation: fadeInTitle 2s ease-in-out;
+}
+@keyframes fadeInTitle {
+  0% { opacity:0; transform:translateY(20px);}
+  100% { opacity:1; transform:translateY(0);}
+}
+
+/* BUTTON */
+button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  background: hotpink;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+button:hover {
+  background: #ff1493;
+  transform: scale(1.05);
+}
+
+/* SWIRLS */
+.swirl {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #ff69b4;
+  animation: swirlMove 20s linear infinite;
+  opacity: 0.5;
+}
+@keyframes swirlMove {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-500px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
 }
 
 /* MEMBER CARDS */
@@ -75,10 +89,9 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 40px;
-  padding: 50px;
+  padding: 60px;
   flex-wrap: wrap;
 }
-
 .card {
   background: white;
   width: 250px;
@@ -88,9 +101,8 @@ h1 {
   cursor: pointer;
   transition: 0.4s;
 }
-
 .card:hover {
-  transform: scale(1.08);
+  transform: translateY(-10px) scale(1.03);
 }
 
 /* POPUP */
@@ -106,7 +118,6 @@ h1 {
   box-shadow: 0 20px 40px rgba(255,105,180,0.6);
   z-index: 10000;
 }
-
 .popup button {
   margin-top: 15px;
   padding: 8px 20px;
@@ -117,83 +128,105 @@ h1 {
   cursor: pointer;
 }
 
+/* FANDOM REVEAL */
+#fandom {
+  font-size: 40px;
+  margin-top: 20px;
+  opacity: 0;
+  transition: 1s;
+  animation: fadeInFandom 1s forwards;
+}
+@keyframes fadeInFandom {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+/* LIGHTSTICK */
+.lightstick {
+  width: 80px;
+  height: 200px;
+  margin: 20px auto;
+  background: linear-gradient(to top, #ff69b4, #ffe4ec);
+  border-radius: 20px;
+  box-shadow: 0 0 25px #ff69b4;
+  position: relative;
+}
+.lightstick::after {
+  content: '💖';
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  animation: glowPulse 1.5s infinite alternate;
+}
+@keyframes glowPulse {
+  0% { text-shadow: 0 0 10px #ff69b4; }
+  100% { text-shadow: 0 0 25px #ff1493; }
+}
+
+/* FOOTER */
 footer {
   margin-top: 70px;
   padding: 25px;
   background: white;
+  font-size: 14px;
+  color: #ff1493;
 }
 </style>
 </head>
-
 <body>
 
-<div id="loader">✨ K-HEARTS ✨</div>
+<!-- NAVBAR -->
+<nav>
+  <a href="#home">Home</a>
+  <a href="#members">Members</a>
+</nav>
 
-<!-- FLOATING SPARKLES -->
-<div class="sparkle" style="left:10%;">💖</div>
-<div class="sparkle" style="left:30%;animation-delay:2s;">✨</div>
-<div class="sparkle" style="left:50%;animation-delay:4s;">🌸</div>
-<div class="sparkle" style="left:70%;animation-delay:1s;">💎</div>
-<div class="sparkle" style="left:85%;animation-delay:3s;">💗</div>
+<!-- HOME -->
+<h1 id="home">K-HEARTS</h1>
+<p>Three Hearts. One Spark.</p>
 
-<header>
-<h1>K-HEARTS</h1>
-<p class="subtitle">Three Hearts. One Spark.</p>
-
-<div id="countdown"></div>
+<!-- Lightstick -->
+<div class="lightstick"></div>
 
 <p>
-Welcome to our official universe.  
-Where elegance meets sparkle and every heartbeat shines brighter.  
-Stay with us. Grow with us. Glow with us.
+Welcome to the official universe of K-HEARTS ✨  
+Cute elegance, soft power, endless sparkle.  
+Scroll down to meet the members and see the fandom reveal 💖
 </p>
-</header>
 
+<!-- FANDOM BUTTON -->
+<button onclick="revealFandom()">Reveal Official Fandom Name</button>
+<div id="fandom">KAES 💖</div>
+
+<!-- SWIRLS -->
+<div class="swirl" style="left:10%; animation-delay:0s;"></div>
+<div class="swirl" style="left:30%; animation-delay:2s;"></div>
+<div class="swirl" style="left:50%; animation-delay:4s;"></div>
+<div class="swirl" style="left:70%; animation-delay:1s;"></div>
+<div class="swirl" style="left:85%; animation-delay:3s;"></div>
+
+<!-- MEMBERS -->
+<h2 id="members">Meet K-HEARTS</h2>
 <section class="members">
-<div class="card" onclick="openPopup('Yujin - Leader, Main Rapper, Lead Dancer, Sub Vocalist')">Yujin</div>
-<div class="card" onclick="openPopup('Wonyoung - Visual, Main Vocalist, Sub Rapper')">Wonyoung</div>
-<div class="card" onclick="openPopup('Gaeul - Main Dancer, Lead Rapper, Sub Vocalist')">Gaeul</div>
+  <div class="card" onclick="openPopup('Karlyn: Leader, Main Rapper, Lead Dancer, Sub Vocalist')">Karlyn</div>
+  <div class="card" onclick="openPopup('Alyssa: Visual, Main Vocalist, Sub Rapper')">Alyssa</div>
+  <div class="card" onclick="openPopup('Trixie: Main Dancer, Lead Rapper, Sub Vocalist')">Trixie</div>
 </section>
 
 <div class="popup" id="popup">
-<div id="popupText"></div>
-<button onclick="closePopup()">Close</button>
+  <div id="popupText"></div>
+  <button onclick="closePopup()">Close</button>
 </div>
-
-<footer>
-© 2026 K-HEARTS Official ♡ All Hearts Reserved
-</footer>
 
 <!-- BACKGROUND MUSIC -->
 <audio autoplay loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
+<!-- SPARKLE CURSOR TRAIL -->
 <script>
-/* COUNTDOWN TIMER (Set comeback date here) */
-var comebackDate = new Date("March 30, 2026 00:00:00").getTime();
-
-var x = setInterval(function() {
-  var now = new Date().getTime();
-  var distance = comebackDate - now;
-
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  document.getElementById("countdown").innerHTML =
-    "Comeback in " + days + " days 💖";
-
-}, 1000);
-
-/* POPUP FUNCTIONS */
-function openPopup(text) {
-  document.getElementById("popupText").innerText = text;
-  document.getElementById("popup").style.display = "block";
-}
-
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-}
-
-/* CURSOR SPARKLE */
 document.addEventListener("mousemove", function(e) {
   var sparkle = document.createElement("div");
   sparkle.innerHTML = "✨";
@@ -201,188 +234,30 @@ document.addEventListener("mousemove", function(e) {
   sparkle.style.left = e.pageX + "px";
   sparkle.style.top = e.pageY + "px";
   sparkle.style.pointerEvents = "none";
-  sparkle.style.animation = "fade 1s forwards";
+  sparkle.style.fontSize = "18px";
+  sparkle.style.opacity = "0.7";
+  sparkle.style.transition = "all 0.5s linear";
   document.body.appendChild(sparkle);
-  setTimeout(() => sparkle.remove(), 1000);
+  setTimeout(() => sparkle.remove(), 700);
 });
 </script>
 
-</body>
-</html>
-
-body {
-  margin: 0;
-  font-family: Georgia, serif;
-  background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
-  text-align: center;
-  color: #b03060;
-  overflow-x: hidden;
-}
-
-/* NAV BAR */
-nav {
-  background: white;
-  padding: 15px;
-  box-shadow: 0 5px 15px rgba(255,182,193,0.4);
-  position: sticky;
-  top: 0;
-}
-
-nav a {
-  margin: 0 20px;
-  text-decoration: none;
-  color: hotpink;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-nav a:hover {
-  color: #ff1493;
-  letter-spacing: 2px;
-}
-
-/* TITLE */
-h1 {
-  font-size: 60px;
-  margin-top: 60px;
-  color: #ff69b4;
-  text-shadow: 0 0 15px #ffb6c1;
-}
-
-/* BUTTON */
-button {
-  padding: 12px 30px;
-  border: none;
-  border-radius: 25px;
-  background: hotpink;
-  color: white;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #ff1493;
-  transform: scale(1.05);
-}
-
-/* MEMBER CARDS */
-.members {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  padding: 60px;
-  flex-wrap: wrap;
-}
-
-.card {
-  background: white;
-  width: 250px;
-  padding: 25px;
-  border-radius: 25px;
-  box-shadow: 0 15px 30px rgba(255,182,193,0.4);
-  transition: 0.4s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-}
-
-/* FANDOM REVEAL */
-#fandom {
-  font-size: 40px;
-  margin-top: 30px;
-  opacity: 0;
-  transition: 1s;
-}
-
-footer {
-  margin-top: 70px;
-  padding: 25px;
-  background: white;
-}
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>K-HEARTS</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<nav>
-  <a href="index.html">Home</a>
-  <a href="members.html">Members</a>
-</nav>
-
-<h1>K-HEARTS</h1>
-<p>Three Hearts. One Spark.</p>
-
-<p>
-Welcome to the official universe of K-HEARTS.  
-Cute elegance. Soft power. Endless sparkle.
-</p>
-
-<button onclick="revealFandom()">Reveal Official Fandom Name</button>
-
-<div id="fandom">KAES 💖</div>
-
-<footer>
-© 2026 K-HEARTS Official ♡ All Hearts Reserved
-</footer>
-
+<!-- POPUP & FANDOM FUNCTIONS -->
 <script>
 function revealFandom() {
   document.getElementById("fandom").style.opacity = "1";
 }
+function openPopup(text) {
+  document.getElementById("popupText").innerText = text;
+  document.getElementById("popup").style.display = "block";
+}
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
 </script>
 
-</body>
-</html>
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>K-HEARTS Members</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<nav>
-  <a href="index.html">Home</a>
-  <a href="members.html">Members</a>
-</nav>
-
-<h1>Meet K-HEARTS</h1>
-
-<section class="members">
-
-  <div class="card">
-    <h2>Karlyn</h2>
-    <p>Leader</p>
-    <p>Main Rapper</p>
-    <p>Lead Dancer</p>
-    <p>Sub Vocalist</p>
-  </div>
-
-  <div class="card">
-    <h2>Alyssa</h2>
-    <p>Visual</p>
-    <p>Main Vocalist</p>
-    <p>Sub Rapper</p>
-  </div>
-
-  <div class="card">
-    <h2>Trixie</h2>
-    <p>Main Dancer</p>
-    <p>Lead Rapper</p>
-    <p>Sub Vocalist</p>
-  </div>
-
-</section>
-
 <footer>
-Forever with KAES 💗
+© 2026 K-HEARTS Official ♡ All Hearts Reserved
 </footer>
 
 </body>
