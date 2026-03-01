@@ -209,3 +209,181 @@ document.addEventListener("mousemove", function(e) {
 
 </body>
 </html>
+
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
+  text-align: center;
+  color: #b03060;
+  overflow-x: hidden;
+}
+
+/* NAV BAR */
+nav {
+  background: white;
+  padding: 15px;
+  box-shadow: 0 5px 15px rgba(255,182,193,0.4);
+  position: sticky;
+  top: 0;
+}
+
+nav a {
+  margin: 0 20px;
+  text-decoration: none;
+  color: hotpink;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #ff1493;
+  letter-spacing: 2px;
+}
+
+/* TITLE */
+h1 {
+  font-size: 60px;
+  margin-top: 60px;
+  color: #ff69b4;
+  text-shadow: 0 0 15px #ffb6c1;
+}
+
+/* BUTTON */
+button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  background: hotpink;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #ff1493;
+  transform: scale(1.05);
+}
+
+/* MEMBER CARDS */
+.members {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 60px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  width: 250px;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 15px 30px rgba(255,182,193,0.4);
+  transition: 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+/* FANDOM REVEAL */
+#fandom {
+  font-size: 40px;
+  margin-top: 30px;
+  opacity: 0;
+  transition: 1s;
+}
+
+footer {
+  margin-top: 70px;
+  padding: 25px;
+  background: white;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>K-HEARTS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="members.html">Members</a>
+</nav>
+
+<h1>K-HEARTS</h1>
+<p>Three Hearts. One Spark.</p>
+
+<p>
+Welcome to the official universe of K-HEARTS.  
+Cute elegance. Soft power. Endless sparkle.
+</p>
+
+<button onclick="revealFandom()">Reveal Official Fandom Name</button>
+
+<div id="fandom">KAES 💖</div>
+
+<footer>
+© 2026 K-HEARTS Official ♡ All Hearts Reserved
+</footer>
+
+<script>
+function revealFandom() {
+  document.getElementById("fandom").style.opacity = "1";
+}
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>K-HEARTS Members</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="members.html">Members</a>
+</nav>
+
+<h1>Meet K-HEARTS</h1>
+
+<section class="members">
+
+  <div class="card">
+    <h2>Karlyn</h2>
+    <p>Leader</p>
+    <p>Main Rapper</p>
+    <p>Lead Dancer</p>
+    <p>Sub Vocalist</p>
+  </div>
+
+  <div class="card">
+    <h2>Alyssa</h2>
+    <p>Visual</p>
+    <p>Main Vocalist</p>
+    <p>Sub Rapper</p>
+  </div>
+
+  <div class="card">
+    <h2>Trixie</h2>
+    <p>Main Dancer</p>
+    <p>Lead Rapper</p>
+    <p>Sub Vocalist</p>
+  </div>
+
+</section>
+
+<footer>
+Forever with KAES 💗
+</footer>
+
+</body>
+</html>
