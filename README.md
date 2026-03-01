@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -13,6 +13,7 @@ nav button{padding:5px 10px;background:#fff0f5;border:none;border-radius:5px;cur
 .avatar-part{position:absolute;}
 .outfit-torso{width:100%;height:50%;top:100px;background:#ffb6c1;}
 .outfit-bottom{width:100%;height:50%;top:200px;background:#ff99ff;}
+.hair{position:absolute;top:0;width:100%;height:100px;background:#ff66b2;}
 .pet{position:absolute;bottom:10px;left:10px;font-size:30px;}
 .confetti{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
 .fade-in{animation:fadeIn 0.5s;}
@@ -23,6 +24,7 @@ nav button{padding:5px 10px;background:#fff0f5;border:none;border-radius:5px;cur
 
 <nav>
 <button onclick="showPage('homePage')">Home</button>
+<button onclick="showPage('membersPage')">Members</button>
 <button onclick="showPage('avatarPage')">Avatar</button>
 <button onclick="showPage('chatPage')">Chat</button>
 <button onclick="showPage('gamesPage')">Games</button>
@@ -37,12 +39,20 @@ nav button{padding:5px 10px;background:#fff0f5;border:none;border-radius:5px;cur
 <h1 style="text-align:center;color:#ff66b2;">💖 Welcome to K-Hearts Fan Universe 💖</h1>
 <p style="text-align:center;">✨ KAES Fandom Name Reveal: <span id="fandomReveal"></span> ✨</p>
 <button onclick="revealFandom()">Reveal KAES</button>
+<p style="text-align:center;font-size:20px;color:#ff3399;">Always stay strong! K-Hearts coming soon!</p>
+</div>
+
+<!-- MEMBERS -->
+<div id="membersPage" class="page">
+<h2>🌸 Meet the Members</h2>
+<div id="memberList"></div>
 </div>
 
 <!-- AVATAR -->
 <div id="avatarPage" class="page">
 <h2>🎀 Your Avatar</h2>
 <div class="avatar-container" id="avatarContainer">
+<div class="avatar-part hair" id="hair"></div>
 <div class="avatar-part outfit-torso" id="torso"></div>
 <div class="avatar-part outfit-bottom" id="bottom"></div>
 <div class="avatar-part pet" id="pet">🐧</div>
@@ -74,6 +84,8 @@ nav button{padding:5px 10px;background:#fff0f5;border:none;border-radius:5px;cur
 <button onclick="buyItem('Comfy Hoodie',20,'#ffb6c1')">Comfy Hoodie - 20 coins</button>
 <button onclick="buyItem('Pink Lightstick',30,'✨')">Pink Lightstick - 30 coins</button>
 <button onclick="buyItem('Penguin Pet',25,'🐧')">Penguin Pet - 25 coins</button>
+<button onclick="buyItem('Dog Pet',25,'🐶')">Dog Pet - 25 coins</button>
+<button onclick="buyItem('Cat Pet',25,'🐱')">Cat Pet - 25 coins</button>
 </div>
 
 <!-- LEADERBOARD -->
@@ -103,9 +115,18 @@ nav button{padding:5px 10px;background:#fff0f5;border:none;border-radius:5px;cur
 // ==== DATA STORAGE ====
 if(!localStorage.getItem('kheartsData')){
 localStorage.setItem('kheartsData',JSON.stringify({
-username:'',coins:0,badges:[],outfit:'Default',pet:'🐧',chat:[],daily:[]}));
+username:'',coins:0,badges:[],outfit:'Default',outfitColor:'#ffb6c1',hairColor:'#ff66b2',pet:'🐧',chat:[],daily:[]}));
 }
 let data=JSON.parse(localStorage.getItem('kheartsData'));
+
+// ==== MEMBERS PAGE ====
+const members=[
+{name:'Karlyn',role:'Leader, Main Rapper, Lead Dancer, Sub Vocalist',pet:'🐧',fav:'White, Japanese food, Penguins, Popmarts (Crybabies)'},
+{name:'Alyssa',role:'Visual, Main Vocalist, Sub Rapper',pet:'🐶',fav:'Pink, Coquette girl, Loves IVE, Collects cute items'},
+{name:'Trixie',role:'Main Dancer, Lead Rapper, Sub Vocalist',pet:'🐱',fav:'Wushu pants, comfy fits, Loves SKZ and NJZ'}
+];
+function updateMembers(){let list=document.getElementById('memberList');list.innerHTML='';members.forEach(m=>{
+let div=document.createElement('div');div.innerHTML=`<h3>${m.name} ${m.pet}</h3><p>Role: ${m.role}</p><p>Favorites: ${m.fav}</p>`;list.appendChild(div);});}
 
 // ==== GENERAL FUNCTIONS ====
 function saveData(){localStorage.setItem('kheartsData',JSON.stringify(data));updateDisplay();}
@@ -114,8 +135,10 @@ document.getElementById('coins').innerText=data.coins;
 document.getElementById('badges').innerText=data.badges.join(', ')||'None';
 document.getElementById('torso').style.backgroundColor=(data.outfitColor||'#ffb6c1');
 document.getElementById('bottom').style.backgroundColor=(data.outfitColor||'#ff99ff');
+document.getElementById('hair').style.backgroundColor=(data.hairColor||'#ff66b2');
 document.getElementById('pet').innerText=data.pet||'🐧';
 updateLeaderboard();
+updateMembers();
 }
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.style.display='none');document.getElementById(id).style.display='block';fadeIn(document.getElementById(id));}
 function fadeIn(el){let op=0;let timer=setInterval(()=>{if(op>=1){clearInterval(timer);}else{op+=0.05;el.style.opacity=op;}},20);}
@@ -133,13 +156,13 @@ function sendMessage(){
 let input=document.getElementById('chatInput'); if(input.value.trim()===''){return;}
 let userMsg="<b>"+(data.username||'Guest')+":</b> "+input.value;
 data.chat.push(userMsg);
-// Idol responses
+// Idol responses (personalized)
 let idolResponses=[
-"☁️ Karlyn noticed your message!",
-"🎀 Alyssa waves hello!",
-"🥟 Trixie cheers you on!",
-"💖 You're amazing, keep going!",
-"✨ KAES universe shines because of you!"
+`☁️ Karlyn notices your outfit ${data.outfit}!`,
+`🎀 Alyssa wags her dog at you!`,
+`🥟 Trixie purrs with her cat!`,
+`💖 You have ${data.coins} coins! Keep going!`,
+`✨ Your badges: ${data.badges.join(', ')||'None'} shine!`
 ];
 let idolReply="<b>Idol:</b> "+idolResponses[Math.floor(Math.random()*idolResponses.length)];
 data.chat.push(idolReply);
@@ -247,10 +270,10 @@ if(!data.username){data.username=prompt("Enter your KAES fan name:"); saveData()
 updateDisplay(); updateChatWindow(); updateLeaderboard();
 
 // ==== SIMPLE GAMES PLACEHOLDER ====
-function playBeatGame(){alert("Beat Game coming soon! Tap hearts on the rhythm.");}
-function playDanceBattle(){alert("Dance Battle coming soon! Challenge AI idols.");}
-function playHeartCatch(){alert("Heart Catch coming soon! Collect hearts!");}
-function playQuiz(){alert("Quiz coming soon! Test your KAES knowledge!");}
+function playBeatGame(){alert("🎵 Rhythm Tap Game coming soon! Tap hearts to the beat!");}
+function playDanceBattle(){alert("💃 Dance Battle coming soon! Challenge the AI idols!");}
+function playHeartCatch(){alert("💖 Heart Catch Game coming soon! Collect hearts!");}
+function playQuiz(){alert("📝 Quiz coming soon! Test your KAES knowledge!");}
 
 // ==== CONFETTI ====
 const canvas=document.getElementById('confettiCanvas'); const ctx=canvas.getContext('2d');
