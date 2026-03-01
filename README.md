@@ -1,129 +1,211 @@
-# khearts777.github.io
-kpop grp
 <!DOCTYPE html>
 <html>
 <head>
-  <title>K-HEARTS</title>
+<title>K-HEARTS</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Georgia', serif;
-      background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
-      text-align: center;
-      color: #b03060;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
+  text-align: center;
+  color: #b03060;
+  overflow-x: hidden;
+}
 
-    header {
-      padding: 60px 20px;
-    }
+/* LOADING SCREEN */
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #fff0f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: hotpink;
+  z-index: 9999;
+  animation: fadeOut 2s forwards;
+  animation-delay: 2s;
+}
 
-    h1 {
-      font-size: 60px;
-      margin: 0;
-      letter-spacing: 3px;
-    }
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
 
-    .subtitle {
-      font-size: 18px;
-      margin-top: 10px;
-    }
+/* FLOATING SPARKLES */
+.sparkle {
+  position: fixed;
+  bottom: -20px;
+  animation: floatUp 10s linear infinite;
+  opacity: 0.6;
+  font-size: 20px;
+}
 
-    .members {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 40px;
-      flex-wrap: wrap;
-    }
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0.6; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
 
-    .card {
-      background: white;
-      width: 250px;
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
-      transition: transform 0.3s ease;
-    }
+/* HEADER */
+header {
+  padding: 80px 20px;
+}
 
-    .card:hover {
-      transform: translateY(-10px);
-    }
+h1 {
+  font-size: 65px;
+  letter-spacing: 4px;
+  color: #ff69b4;
+  text-shadow: 0 0 20px #ffb6c1;
+}
 
-    .name {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+.subtitle {
+  font-size: 20px;
+}
 
-    .position {
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
+/* COUNTDOWN */
+#countdown {
+  font-size: 22px;
+  margin: 20px;
+  color: #ff1493;
+}
 
-    footer {
-      margin-top: 60px;
-      padding: 20px;
-      font-size: 14px;
-      background: #fff;
-    }
+/* MEMBER CARDS */
+.members {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 50px;
+  flex-wrap: wrap;
+}
 
-    button {
-      margin-top: 30px;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 25px;
-      background: #ff69b4;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+.card {
+  background: white;
+  width: 250px;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 15px 30px rgba(255,182,193,0.4);
+  cursor: pointer;
+  transition: 0.4s;
+}
 
-    button:hover {
-      background: #ff1493;
-    }
+.card:hover {
+  transform: scale(1.08);
+}
 
-  </style>
+/* POPUP */
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(255,105,180,0.6);
+  z-index: 10000;
+}
+
+.popup button {
+  margin-top: 15px;
+  padding: 8px 20px;
+  border: none;
+  background: hotpink;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 70px;
+  padding: 25px;
+  background: white;
+}
+</style>
 </head>
 
 <body>
 
+<div id="loader">✨ K-HEARTS ✨</div>
+
+<!-- FLOATING SPARKLES -->
+<div class="sparkle" style="left:10%;">💖</div>
+<div class="sparkle" style="left:30%;animation-delay:2s;">✨</div>
+<div class="sparkle" style="left:50%;animation-delay:4s;">🌸</div>
+<div class="sparkle" style="left:70%;animation-delay:1s;">💎</div>
+<div class="sparkle" style="left:85%;animation-delay:3s;">💗</div>
+
 <header>
-  <h1>K-HEARTS</h1>
-  <p class="subtitle">Three Hearts. One Spark.</p>
-  <button>Latest Comeback</button>
+<h1>K-HEARTS</h1>
+<p class="subtitle">Three Hearts. One Spark.</p>
+
+<div id="countdown"></div>
+
+<p>
+Welcome to our official universe.  
+Where elegance meets sparkle and every heartbeat shines brighter.  
+Stay with us. Grow with us. Glow with us.
+</p>
 </header>
 
 <section class="members">
-
-  <div class="card">
-    <div class="name">Yujin</div>
-    <div class="position">Leader</div>
-    <div class="position">Main Rapper</div>
-    <div class="position">Lead Dancer</div>
-    <div class="position">Sub Vocalist</div>
-  </div>
-
-  <div class="card">
-    <div class="name">Wonyoung</div>
-    <div class="position">Visual</div>
-    <div class="position">Main Vocalist</div>
-    <div class="position">Sub Rapper</div>
-  </div>
-
-  <div class="card">
-    <div class="name">Gaeul</div>
-    <div class="position">Main Dancer</div>
-    <div class="position">Lead Rapper</div>
-    <div class="position">Sub Vocalist</div>
-  </div>
-
+<div class="card" onclick="openPopup('Yujin - Leader, Main Rapper, Lead Dancer, Sub Vocalist')">Yujin</div>
+<div class="card" onclick="openPopup('Wonyoung - Visual, Main Vocalist, Sub Rapper')">Wonyoung</div>
+<div class="card" onclick="openPopup('Gaeul - Main Dancer, Lead Rapper, Sub Vocalist')">Gaeul</div>
 </section>
 
+<div class="popup" id="popup">
+<div id="popupText"></div>
+<button onclick="closePopup()">Close</button>
+</div>
+
 <footer>
-  © 2026 K-HEARTS Official
+© 2026 K-HEARTS Official ♡ All Hearts Reserved
 </footer>
+
+<!-- BACKGROUND MUSIC -->
+<audio autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* COUNTDOWN TIMER (Set comeback date here) */
+var comebackDate = new Date("March 30, 2026 00:00:00").getTime();
+
+var x = setInterval(function() {
+  var now = new Date().getTime();
+  var distance = comebackDate - now;
+
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  document.getElementById("countdown").innerHTML =
+    "Comeback in " + days + " days 💖";
+
+}, 1000);
+
+/* POPUP FUNCTIONS */
+function openPopup(text) {
+  document.getElementById("popupText").innerText = text;
+  document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+/* CURSOR SPARKLE */
+document.addEventListener("mousemove", function(e) {
+  var sparkle = document.createElement("div");
+  sparkle.innerHTML = "✨";
+  sparkle.style.position = "fixed";
+  sparkle.style.left = e.pageX + "px";
+  sparkle.style.top = e.pageY + "px";
+  sparkle.style.pointerEvents = "none";
+  sparkle.style.animation = "fade 1s forwards";
+  document.body.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 1000);
+});
+</script>
 
 </body>
 </html>
