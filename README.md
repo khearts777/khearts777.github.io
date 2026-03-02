@@ -15,16 +15,13 @@ h1,h2,h3{text-align:center;color:#ff3399;}
 .member-card{background:#ffe0f5;margin:5px;padding:8px;border-radius:12px;text-align:center;transition:0.3s;cursor:pointer;}
 .member-card:hover{transform:scale(1.05);box-shadow:0 0 15px #ff99cc;}
 #petContainer{position:relative;width:150px;height:150px;margin:20px auto;}
-.pet{position:absolute;font-size:100px;transition:all 0.5s;}
-.pet-hat{position:absolute;top:-20px;left:25px;font-size:50px;pointer-events:none;}
-.pet-collar{position:absolute;bottom:5px;left:40px;font-size:30px;pointer-events:none;}
+.pet-layer{position:absolute;top:0;left:0;width:100%;height:100%;font-size:100px;pointer-events:none;transition:all 0.5s;text-align:center;}
 #petHappiness{font-weight:bold;color:#ff3399;text-align:center;margin-top:10px;}
 .itemBtn{margin:3px;padding:5px;border-radius:10px;cursor:pointer;background:#ffccf0;border:none;transition:0.2s;}
 .itemBtn:hover{transform:scale(1.1);background:#ff99cc;}
 #chatWindow,#gameArea,#quizArea,#leaderboardList,#lyricsContainer{border:2px solid #ff99cc;padding:5px;border-radius:10px;background:#fff0f5;overflow-y:auto;}
 #chatWindow{height:200px;}
 .chatBubble{background:#ffe6f0;margin:3px;padding:5px;border-radius:10px;}
-#coins,#badges{font-weight:bold;color:#ff3399;}
 button.gameBtn{margin:3px;padding:5px;border-radius:10px;cursor:pointer;background:#ffccf0;border:none;transition:0.2s;}
 button.gameBtn:hover{transform:scale(1.1);background:#ff99cc;}
 </style>
@@ -32,14 +29,13 @@ button.gameBtn:hover{transform:scale(1.1);background:#ff99cc;}
 <body>
 
 <h1>💖 K-Hearts Fan Universe 💖</h1>
-
 <p style="text-align:center;font-size:20px;color:#ff3399;">Always stay strong! K-Hearts coming soon!</p>
-
 <div style="text-align:center;margin-bottom:10px;">
 Coins: <span id="coins">0</span> | Badges: <span id="badges">None</span>
 </div>
 
 <nav>
+<button onclick="showSection('home')">Home</button>
 <button onclick="showSection('members')">Members</button>
 <button onclick="showSection('pets')">Pets</button>
 <button onclick="showSection('shop')">Shop</button>
@@ -49,6 +45,12 @@ Coins: <span id="coins">0</span> | Badges: <span id="badges">None</span>
 <button onclick="showSection('leaderboard')">Leaderboard</button>
 <button onclick="showSection('lyrics')">Lyrics</button>
 </nav>
+
+<!-- HOME -->
+<div id="home" class="page">
+<h2>🏠 Welcome to K-Hearts Fan Universe!</h2>
+<p style="text-align:center;color:#ff3399;">Interact with your favorite idols, play games, dress your pets, earn coins, and collect badges!</p>
+</div>
 
 <!-- MEMBERS -->
 <div id="members" class="page">
@@ -60,24 +62,33 @@ Coins: <span id="coins">0</span> | Badges: <span id="badges">None</span>
 <div id="pets" class="page">
 <h2>🐾 Your Pet</h2>
 <div id="petContainer">
-  <div class="pet" id="petEmoji">🐧</div>
-  <div class="pet-hat" id="petHat"></div>
-  <div class="pet-collar" id="petCollar"></div>
+  <div class="pet-layer" id="petBase">🐧</div>
+  <div class="pet-layer" id="petHat"></div>
+  <div class="pet-layer" id="petCollar"></div>
+  <div class="pet-layer" id="petOutfit"></div>
+  <div class="pet-layer" id="petProp"></div>
 </div>
 <p>Happiness: <span id="petHappiness">50</span>/100 💖</p>
+<div style="text-align:center;">
 <button onclick="choosePet('🐧')">Choose Penguin 🐧</button>
 <button onclick="choosePet('🐶')">Choose Dog 🐶</button>
 <button onclick="choosePet('🐱')">Choose Cat 🐱</button>
+</div>
+<div style="text-align:center;margin-top:5px;">
 <button onclick="petAction('play')">Play 🎾</button>
 <button onclick="petAction('bathe')">Bathe 🛁</button>
+</div>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="page">
-<h2>🛒 Pet Items Shop</h2>
-<button class="itemBtn" onclick="buyItem('Toy Ball','toy','🎾',10)">Toy Ball - 10 Coins</button>
+<h2>🛒 Pet Items & Clothes Shop</h2>
+<button class="itemBtn" onclick="buyItem('Toy Ball','prop','🎾',10)">Toy Ball - 10 Coins</button>
 <button class="itemBtn" onclick="buyItem('Pet Hat','hat','🎀',15)">Pet Hat - 15 Coins</button>
 <button class="itemBtn" onclick="buyItem('Pet Collar','collar','💖',20)">Pet Collar - 20 Coins</button>
+<button class="itemBtn" onclick="buyItem('Pink Hoodie','outfit','👚',25)">Pink Hoodie - 25 Coins</button>
+<button class="itemBtn" onclick="buyItem('Comfy Wushu Pants','outfit','🩳',25)">Wushu Pants - 25 Coins</button>
+<button class="itemBtn" onclick="buyItem('Tiny Phone','prop','📱',15)">Phone - 15 Coins</button>
 </div>
 
 <!-- GAMES -->
@@ -88,6 +99,7 @@ Coins: <span id="coins">0</span> | Badges: <span id="badges">None</span>
 <button class="gameBtn" onclick="spinWheel()">Spin the Wheel</button>
 <button class="gameBtn" onclick="quickTap()">Quick Tap Hearts</button>
 <button class="gameBtn" onclick="petTrick()">Pet Trick</button>
+<button class="gameBtn" onclick="homeworkChallenge()">Homework Challenge</button>
 </div>
 <div id="gameMessage" style="text-align:center;margin-top:10px;color:#ff3399;"></div>
 </div>
@@ -108,7 +120,7 @@ Coins: <span id="coins">0</span> | Badges: <span id="badges">None</span>
 <option value="Alyssa">Alyssa</option>
 </select>
 <div id="chatWindow"></div>
-<input type="text" id="chatInput" placeholder="Say something...">
+<input type="text" id="chatInput" placeholder="Ask a question or chat...">
 <button onclick="sendMessage()">Send</button>
 </div>
 
@@ -121,7 +133,7 @@ Coins: <span id="coins">0</span> | Badges: <span id="badges">None</span>
 <!-- LYRICS -->
 <div id="lyrics" class="page">
 <h2>🎵 No Limits Lyrics</h2>
-<div id="lyricsContainer" style="height:250px;">
+<div id="lyricsContainer" style="height:250px;overflow-y:auto;">
 <p>No limits<br>No pressure<br>No ceiling<br>We go up</p>
 <p>Walk in like a headline, cameras all flash<br>Step so sharp, make the whole world crash<br>Different languages, same ambition<br>Born to win — that’s the only mission</p>
 <p>Mirror mirror, we don’t compete<br>We break the glass in designer feet<br>No permission, we elevate<br>Watch how legends are made</p>
@@ -147,8 +159,6 @@ const members=[
 {name:'Hayley',role:'Lead Dancer, Lead Vocalist, Maknae',pet:'🐶',fav:'Black, Stray Kids'},
 {name:'Alyssa',role:'Main Vocalist, Visual, Sub Rapper & Sub Dancer',pet:'🐶',fav:'Pink, Coquette style, IVE'}
 ];
-
-// ===== DISPLAY MEMBERS =====
 function updateMembers(){
 let list=document.getElementById('memberList'); list.innerHTML='';
 members.forEach(m=>{
@@ -167,36 +177,29 @@ document.getElementById(id).style.display='block';
 
 // ===== PET SYSTEM =====
 function updatePetDisplay(){
-document.getElementById('petEmoji').innerText=data.pet;
+document.getElementById('petBase').innerText=data.pet;
 document.getElementById('petHappiness').innerText=data.petHappiness;
 document.getElementById('petHat').innerText=data.shopItems.includes('Pet Hat')?'🎀':'';
 document.getElementById('petCollar').innerText=data.shopItems.includes('Pet Collar')?'💖':'';
+document.getElementById('petOutfit').innerText=data.shopItems.includes('Pink Hoodie')?'👚':data.shopItems.includes('Comfy Wushu Pants')?'🩳':'';
+document.getElementById('petProp').innerText=data.shopItems.includes('Toy Ball')?'🎾':data.shopItems.includes('Tiny Phone')?'📱':'';
 }
 
-function choosePet(pet){
-data.pet=pet; data.petHappiness=50; saveData(); updatePetDisplay();
-alert('You chose '+pet+'! Take good care of them!');
-}
-
+function choosePet(pet){data.pet=pet; data.petHappiness=50; saveData(); updatePetDisplay(); alert('You chose '+pet+'! Take good care of them!');}
 function petAction(action){
-let petEl=document.getElementById('petEmoji');
 if(action==='play'){
 if(!data.shopItems.includes('Toy Ball')){alert('Buy a Toy Ball first!'); return;}
 data.petHappiness=Math.min(100,data.petHappiness+10); data.coins+=5;
 animatePet('play');
 }
-if(action==='bathe'){
-data.petHappiness=Math.min(100,data.petHappiness+15); data.coins+=5;
+if(action==='bathe'){data.petHappiness=Math.min(100,data.petHappiness+15); data.coins+=5;
 animatePet('bathe');
 }
 saveData(); updatePetDisplay(); updateLeaderboard();
 }
-
 function animatePet(action){
-let petEl=document.getElementById('petEmoji');
-if(action==='play'){let x=0; let dir=1;
-let interval=setInterval(()=>{x+=dir*10; petEl.style.transform=`translateX(${x}px)`; if(x>50||x<-50) dir*=-1;},100);
-setTimeout(()=>{clearInterval(interval); petEl.style.transform='translateX(0px)';},1000);}
+let petEl=document.getElementById('petBase');
+if(action==='play'){let x=0; let dir=1; let interval=setInterval(()=>{x+=dir*10; petEl.style.transform=`translateX(${x}px)`; if(x>50||x<-50) dir*=-1;},100); setTimeout(()=>{clearInterval(interval); petEl.style.transform='translateX(0px)';},1000);}
 if(action==='bathe'){petEl.style.transform='rotate(20deg)'; setTimeout(()=>{petEl.style.transform='rotate(0deg)';},500);}
 }
 
@@ -210,9 +213,7 @@ data.coins-=cost; saveData(); updatePetDisplay(); alert(`Purchased ${name}!`);
 // ===== CHAT AI =====
 function updateChatWindow(){
 let win=document.getElementById('chatWindow'); win.innerHTML='';
-data.chatHistory.forEach(msg=>{
-let p=document.createElement('div'); p.className='chatBubble'; p.innerHTML=msg; win.appendChild(p);
-});
+data.chatHistory.forEach(msg=>{let p=document.createElement('div'); p.className='chatBubble'; p.innerHTML=msg; win.appendChild(p);});
 win.scrollTop=win.scrollHeight;
 }
 
@@ -223,6 +224,14 @@ if(input.value.trim()==='') return;
 let member=document.getElementById('idolSelect').value;
 let userMsg=`<b>${data.username||'Fan'}:</b> ${input.value}`;
 data.chatHistory.push(userMsg);
+
+// Homework AI: basic math & spelling
+let hwResponse='';
+try{
+let hw=input.value.toLowerCase();
+if(hw.includes('solve')||hw.includes('calculate')||hw.match(/\d/)){hwResponse='Hmm let me help! Answer: '+eval(hw.replace(/[^0-9+\-*/(). ]/g,''));}
+else if(hw.includes('spell')){let word=hw.split(' ').pop(); hwResponse='I think the spelling is: '+word;}
+}catch(e){hwResponse='I am not sure 😅';}
 
 let responses={
 'Karlyn':['You got this! 💖','Keep shining!','Let’s hype it up! ✨'],
@@ -235,10 +244,9 @@ let arr=responses[member];
 let response;
 do{response=arr[Math.floor(Math.random()*arr.length)];}while(response===lastResponse);
 lastResponse=response;
-data.chatHistory.push('<b>'+member+':</b> '+response);
 
-data.coins+=5; // reward coins for chatting
-input.value=''; saveData(); updateChatWindow(); updateDisplay();
+data.chatHistory.push('<b>'+member+':</b> '+response+(hwResponse?' '+hwResponse:''));
+data.coins+=5; input.value=''; saveData(); updateChatWindow(); updateDisplay();
 }
 
 // ===== LEADERBOARD =====
@@ -271,17 +279,11 @@ function playMemory(){alert('Memory Match: Match pairs! +10 Coins'); data.coins+
 function spinWheel(){let coins=Math.floor(Math.random()*20+5); alert(`Spin the Wheel: You got ${coins} Coins!`); data.coins+=coins; saveData(); updateDisplay();}
 function quickTap(){let coins=Math.floor(Math.random()*15+5); alert(`Quick Tap: You earned ${coins} Coins!`); data.coins+=coins; saveData(); updateDisplay();}
 function petTrick(){let coins=Math.floor(Math.random()*10+5); alert(`Pet Trick Success! +${coins} Coins`); data.coins+=coins; saveData(); updateDisplay();}
+function homeworkChallenge(){let coins=Math.floor(Math.random()*15+5); alert(`Homework Challenge: +${coins} Coins! Try asking AI for help!`); data.coins+=coins; saveData(); updateDisplay();}
 
 // ===== USERNAME =====
 if(!data.username){data.username=prompt("Enter your fan name:"); saveData();}
 
 // ===== SAVE & DISPLAY =====
 function saveData(){localStorage.setItem('kheartsData',JSON.stringify(data)); updateLeaderboard();}
-function updateDisplay(){document.getElementById('coins').innerText=data.coins; document.getElementById('badges').innerText=data.badges.join(', ')||'None'; updatePetDisplay(); updateMembers(); updateLeaderboard(); updateChatWindow();}
-
-// ===== INITIAL LOAD =====
-updateDisplay(); loadQuiz(); showSection('members');
-</script>
-
-</body>
-</html>
+function updateDisplay(){document.getElementById('coins').innerText=data.coins; document.getElementById('badges').innerText=data.badges.join(', ')||
