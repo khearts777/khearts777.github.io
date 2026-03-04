@@ -68,15 +68,7 @@ input{
 
 <body>
 
-<h1>💖 K-HEARTS WORLD 💖</h1>
-
-<div id="login">
-  <h3>Enter your Kaes name:</h3>
-  <input id="nameInput">
-  <button onclick="start()">Enter</button>
-</div>
-
-<div id="main" style="display:none;">
+<h1>💖 K-HEARTS WORLD 💖</h1
 
 <p>Fandom: 💖 Kaes 💖</p>
 <p>Coins: <span id="coins">100</span> 💰</p>
