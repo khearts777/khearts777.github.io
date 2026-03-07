@@ -13,14 +13,12 @@ text-align:center;
 margin:0;
 }
 
-h1{color:#ff1493;}
-
 button{
 background:#ff69b4;
 border:none;
-padding:10px 16px;
-margin:5px;
-border-radius:15px;
+padding:10px 15px;
+border-radius:12px;
+margin:4px;
 color:white;
 cursor:pointer;
 }
@@ -39,9 +37,7 @@ position:relative;
 100%{left:0}
 }
 
-.walk{
-animation:walk 6s infinite;
-}
+.walk{animation:walk 5s infinite;}
 
 @keyframes bounce{
 0%{transform:translateY(0)}
@@ -49,12 +45,10 @@ animation:walk 6s infinite;
 100%{transform:translateY(0)}
 }
 
-.playing{
-animation:bounce 0.6s infinite;
-}
+.playing{animation:bounce 0.6s infinite;}
 
 .chatbox{
-height:240px;
+height:220px;
 overflow:auto;
 border:2px solid pink;
 background:white;
@@ -64,8 +58,8 @@ text-align:left;
 }
 
 #gameArea{
-width:320px;
-height:320px;
+width:300px;
+height:300px;
 background:white;
 margin:auto;
 border-radius:20px;
@@ -83,12 +77,22 @@ cursor:pointer;
 
 <body>
 
-<h1>💖 K-HEARTS WORLD 💖</h1>
+<h1>💖 K-Hearts World 💖</h1>
 
 <div id="login">
 Enter your Kaes name:<br>
 <input id="nameInput">
 <button onclick="start()">Enter</button>
+</div>
+
+<div id="petSelect" style="display:none">
+
+<h2>Choose Your Pet</h2>
+
+<button onclick="choosePet('🐶')">Dog</button>
+<button onclick="choosePet('🐱')">Cat</button>
+<button onclick="choosePet('🐧')">Penguin</button>
+
 </div>
 
 <div id="game" style="display:none">
@@ -105,8 +109,7 @@ Enter your Kaes name:<br>
 <button onclick="show('lyrics')">Lyrics</button>
 
 <div id="home" class="section active">
-<h2>Welcome <span id="player"></span> 💖</h2>
-<p>K-Hearts official fan world</p>
+<h2>Welcome <span id="player"></span></h2>
 </div>
 
 <div id="pets" class="section">
@@ -125,25 +128,35 @@ Hi!
 <button onclick="bathe()">Bathe</button>
 <button onclick="play()">Play</button>
 
-<h3>Pet Shop</h3>
-
-<button onclick="buyToy('⚽',10)">Ball</button>
-<button onclick="buyToy('🧸',15)">Teddy</button>
-<button onclick="buyToy('🦴',10)">Bone</button>
-
-<div id="toy" style="font-size:40px"></div>
-
 </div>
 
 <div id="games" class="section">
 
-<h3>Catch the Coin</h3>
+<h3>Game 1: Catch the Coin</h3>
 
 <div id="gameArea">
 <div id="coin">🪙</div>
 </div>
 
 <p>Score: <span id="score">0</span></p>
+
+<hr>
+
+<h3>Game 2: Number Guess</h3>
+
+<button onclick="guessGame()">Play</button>
+
+<hr>
+
+<h3>Game 3: Reaction Tap</h3>
+
+<button onclick="reactionGame()">Tap Fast!</button>
+
+<hr>
+
+<h3>Game 4: Quiz</h3>
+
+<button onclick="quizGame()">Start Quiz</button>
 
 </div>
 
@@ -171,7 +184,7 @@ Hi!
 
 <h3>No Limits</h3>
 
-<div style="background:white;padding:20px;border-radius:20px;text-align:left">
+<p style="background:white;padding:20px;border-radius:20px;text-align:left">
 
 No limits  
 No pressure  
@@ -208,7 +221,8 @@ No crown left to take
 We don’t stop, we redefine  
 No ceiling — we climb.
 
-</div>
+</p>
+
 </div>
 
 </div>
@@ -219,58 +233,7 @@ let coins=100
 let health=100
 let username=""
 let score=0
-
-let responses=[
-"Hi!",
-"Hey!",
-"What's up?",
-"Tell me something interesting.",
-"That's funny 😂",
-"That's wild.",
-"I'm listening.",
-"Spill the tea.",
-"You're hilarious.",
-"That's iconic.",
-"Main character energy.",
-"Interesting...",
-"I'm curious now.",
-"Explain more.",
-"That's adorable.",
-"I'm impressed.",
-"You're creative.",
-"That's clever.",
-"Relatable.",
-"Same honestly.",
-"I'm vibing with this.",
-"That escalated quickly.",
-"You have good taste.",
-"That's exciting.",
-"You're funny.",
-"That's chaotic but fun.",
-"I'm enjoying this conversation.",
-"That's surprising.",
-"I'm invested now.",
-"This is entertaining.",
-"That's bold.",
-"You're full of ideas.",
-"That's dramatic!",
-"That sounds crazy.",
-"I'm curious.",
-"Tell me more.",
-"That's unexpected.",
-"That's kind of genius.",
-"That's a vibe.",
-"Cool!"
-]
-
-let moods={
-mad:["HEY 😡","Take care of me!","I'm angry!"],
-sad:["I'm sad...","Play with me","I feel lonely"],
-annoyed:["Hmm","You forgot me","I'm bored"],
-meh:["I'm ok","Just chilling","What now?"],
-playful:["Let's play!","Ball!!","YAY"],
-happy:["BEST DAY EVER","I LOVE YOU","Let's go!"]
-}
+let secret=Math.floor(Math.random()*10)+1
 
 function start(){
 
@@ -278,10 +241,19 @@ username=document.getElementById("nameInput").value
 
 if(username==="")return
 
-document.getElementById("player").innerText=username
-
 document.getElementById("login").style.display="none"
+document.getElementById("petSelect").style.display="block"
+
+}
+
+function choosePet(p){
+
+document.getElementById("pet").innerText=p
+
+document.getElementById("petSelect").style.display="none"
 document.getElementById("game").style.display="block"
+
+document.getElementById("player").innerText=username
 
 update()
 
@@ -312,23 +284,17 @@ updateMood()
 
 function updateMood(){
 
-let petMood=""
+let mood=""
 
-if(health<=10)petMood="mad"
-else if(health<=30)petMood="sad"
-else if(health<=50)petMood="annoyed"
-else if(health<=70)petMood="meh"
-else if(health<100)petMood="playful"
-else petMood="happy"
+if(health<=10)mood="mad"
+else if(health<=30)mood="sad"
+else if(health<=50)mood="annoyed"
+else if(health<=70)mood="meh"
+else if(health<100)mood="playful"
+else mood="extremely happy"
 
-document.getElementById("mood").innerText=petMood
-document.getElementById("petMood").innerText=petMood
-
-let lines=moods[petMood]
-
-let line=lines[Math.floor(Math.random()*lines.length)]
-
-document.getElementById("speech").innerText=line
+document.getElementById("mood").innerText=mood
+document.getElementById("petMood").innerText=mood
 
 }
 
@@ -350,10 +316,9 @@ update()
 function bathe(){
 
 health+=10
-
 if(health>100)health=100
 
-document.getElementById("speech").innerText="Bath time!"
+document.getElementById("speech").innerText="Splash!"
 
 update()
 
@@ -376,23 +341,12 @@ update()
 
 }
 
-function buyToy(item,price){
-
-if(coins>=price){
-coins-=price
-document.getElementById("toy").innerText=item
-}
-
-update()
-
-}
-
 let coin=document.getElementById("coin")
 
 function moveCoin(){
 
-let x=Math.random()*280
-let y=Math.random()*280
+let x=Math.random()*260
+let y=Math.random()*260
 
 coin.style.left=x+"px"
 coin.style.top=y+"px"
@@ -414,9 +368,76 @@ update()
 
 }
 
+function guessGame(){
+
+let guess=prompt("Guess number 1-10")
+
+if(guess==secret){
+
+alert("Correct! +20 coins")
+
+coins+=20
+
+secret=Math.floor(Math.random()*10)+1
+
+}else{
+
+alert("Wrong! Try again")
+
+}
+
+update()
+
+}
+
+function reactionGame(){
+
+let start=Date.now()
+
+alert("Click OK then tap again FAST!")
+
+let end=Date.now()
+
+let reaction=end-start
+
+if(reaction<300){
+
+coins+=25
+alert("Fast! +25 coins")
+
+}else{
+
+coins+=5
+alert("Slow! +5 coins")
+
+}
+
+update()
+
+}
+
+function quizGame(){
+
+let ans=prompt("Who is the leader? A)Karlyn B)Trixie")
+
+if(ans.toLowerCase()=="a"){
+
+coins+=20
+alert("Correct!")
+
+}else{
+
+alert("Wrong!")
+
+}
+
+update()
+
+}
+
 function send(){
 
-let input=document.getElementById("chatInput").value
+let input=document.getElementById("chatInput").value.toLowerCase()
 
 if(input==="")return
 
@@ -424,9 +445,37 @@ let box=document.getElementById("chatbox")
 
 box.innerHTML+="<p><b>"+username+":</b> "+input+"</p>"
 
-let reply=responses[Math.floor(Math.random()*responses.length)]
+let reply=""
 
-box.innerHTML+="<p><b>Pet:</b> "+reply+"</p>"
+if(input.includes("hello")||input.includes("hi")){
+reply="Hi "+username+"! 💖"
+}
+
+else{
+
+let responses=[
+"That's interesting!",
+"Tell me more!",
+"LOL 😂",
+"I'm listening.",
+"Spill the tea ☕",
+"That's iconic.",
+"Main character energy!",
+"That's cool.",
+"I'm curious now.",
+"Explain more!",
+"That sounds fun.",
+"You're hilarious.",
+"That's surprising.",
+"I'm enjoying this chat!",
+"That's a vibe."
+]
+
+reply=responses[Math.floor(Math.random()*responses.length)]
+
+}
+
+box.innerHTML+="<p><b>AI:</b> "+reply+"</p>"
 
 box.scrollTop=box.scrollHeight
 
