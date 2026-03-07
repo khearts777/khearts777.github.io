@@ -2,222 +2,210 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>K-Hearts Ultimate</title>
+<title>K-Hearts World</title>
+
 <style>
+
 body{
-  margin:0;
-  font-family:"Comic Sans MS",cursive;
-  background:linear-gradient(#ffd6ec,#ffc0e6);
-  text-align:center;
+font-family:Arial;
+background:linear-gradient(#ffd6f2,#ffc2e6);
+text-align:center;
+margin:0;
 }
+
 h1{color:#ff1493;}
+
 button{
-  background:#ff69b4;
-  border:none;
-  padding:10px 18px;
-  border-radius:20px;
-  margin:5px;
-  color:white;
-  cursor:pointer;
+background:#ff69b4;
+border:none;
+padding:10px 16px;
+margin:5px;
+border-radius:15px;
+color:white;
+cursor:pointer;
 }
-button:hover{background:#ff1493;}
+
 .section{display:none;padding:20px;}
 .active{display:block;}
-.card{
-  background:white;
-  border-radius:20px;
-  padding:15px;
-  margin:10px auto;
-  width:300px;
+
+.pet{
+font-size:90px;
+position:relative;
 }
-.pet-area{
-  font-size:80px;
-  position:relative;
-  height:160px;
+
+@keyframes walk{
+0%{left:0}
+50%{left:80px}
+100%{left:0}
 }
-.layer{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
+
+.walk{
+animation:walk 6s infinite;
 }
-#hat{top:0;font-size:40px;}
-#collar{top:75px;font-size:30px;}
-#toy{top:100px;font-size:40px;}
-.chat-box{
-  height:220px;
-  overflow:auto;
-  border:2px solid pink;
-  background:white;
-  padding:10px;
-  text-align:left;
-  border-radius:15px;
+
+@keyframes bounce{
+0%{transform:translateY(0)}
+50%{transform:translateY(-25px)}
+100%{transform:translateY(0)}
 }
-input{
-  padding:8px;
-  border-radius:10px;
-  border:1px solid pink;
+
+.playing{
+animation:bounce 0.6s infinite;
 }
+
+.chatbox{
+height:240px;
+overflow:auto;
+border:2px solid pink;
+background:white;
+border-radius:15px;
+padding:10px;
+text-align:left;
+}
+
+#gameArea{
+width:320px;
+height:320px;
+background:white;
+margin:auto;
+border-radius:20px;
+position:relative;
+}
+
+#coin{
+position:absolute;
+font-size:35px;
+cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
+
 <h1>💖 K-HEARTS WORLD 💖</h1>
 
 <div id="login">
-  <h3>Enter your Kaes name:</h3>
-  <input id="nameInput">
-  <button onclick="start()">Enter</button>
+Enter your Kaes name:<br>
+<input id="nameInput">
+<button onclick="start()">Enter</button>
 </div>
 
-<div id="main" style="display:none;">
-<p>Fandom: 💖 Kaes 💖</p>
-<p>Coins: <span id="coins">100</span> 💰</p>
-<p>Happiness: <span id="happy">70</span> 💕</p>
-<p>Health: <span id="health">100</span> ❤️</p>
-<button onclick="feed()">Feed (-5 coins)</button>
-<br>
+<div id="game" style="display:none">
+
+<p>Coins: <span id="coins"></span></p>
+<p>Health: <span id="health"></span></p>
+<p>Mood: <span id="mood"></span></p>
+
 <button onclick="show('home')">Home</button>
-<button onclick="show('members')">Members</button>
 <button onclick="show('pets')">Pets</button>
 <button onclick="show('games')">Games</button>
-<button onclick="show('chat')">AI Chat</button>
-<button onclick="show('leaderboard')">Leaderboard</button>
+<button onclick="show('chat')">Chat</button>
+<button onclick="show('members')">Members</button>
 <button onclick="show('lyrics')">Lyrics</button>
 
-<!-- HOME -->
 <div id="home" class="section active">
-<h2>Welcome <span id="player"></span> 💕</h2>
-<p>Future global queens 👑</p>
+<h2>Welcome <span id="player"></span> 💖</h2>
+<p>K-Hearts official fan world</p>
 </div>
 
-<!-- MEMBERS -->
-<div id="members" class="section">
-<h2>Members</h2>
-<div class="card"><b>Karlyn</b> – Leader, Main Rapper, Lead Dancer, Sub Vocalist</div>
-<div class="card"><b>Trixie</b> – Centre, Sub Rapper, Main Dancer, Sub Vocalist</div>
-<div class="card"><b>Hayley</b> – Lead Dancer, Lead Vocalist, Maknae</div>
-<div class="card"><b>Alyssa</b> – Main Vocalist, Visual, Sub Rapper, Sub Dancer</div>
-</div>
-
-<!-- PETS -->
 <div id="pets" class="section">
-<h2>Your Pet</h2>
-<button onclick="choosePet('🐶')">Dog</button>
-<button onclick="choosePet('🐱')">Cat</button>
-<button onclick="choosePet('🐧')">Penguin</button>
-<div class="pet-area">
-<div id="pet">🐶</div>
-<div id="hat" class="layer"></div>
-<div id="collar" class="layer"></div>
-<div id="toy" class="layer"></div>
+
+<div id="pet" class="pet walk">🐶</div>
+
+<p>Mood: <span id="petMood"></span></p>
+
+<div id="speech" style="background:white;padding:10px;border-radius:15px;width:200px;margin:auto;">
+Hi!
 </div>
-<h3>Shop</h3>
-<button onclick="buy('hat','🎀',20)">Bow</button>
-<button onclick="buy('hat','👑',30)">Crown</button>
-<button onclick="buy('collar','💎',15)">Diamond</button>
-<button onclick="buy('collar','🌸',15)">Flower</button>
-<button onclick="buy('toy','⚽',10)">Ball</button>
-<button onclick="buy('toy','🧸',15)">Teddy</button>
-<button onclick="buy('toy','🦴',10)">Bone</button>
+
 <br>
-<button onclick="play()">Play (+5)</button>
-<button onclick="bathe()">Bathe 🛁</button>
+
+<button onclick="feed()">Feed</button>
+<button onclick="bathe()">Bathe</button>
+<button onclick="play()">Play</button>
+
+<h3>Pet Shop</h3>
+
+<button onclick="buyToy('⚽',10)">Ball</button>
+<button onclick="buyToy('🧸',15)">Teddy</button>
+<button onclick="buyToy('🦴',10)">Bone</button>
+
+<div id="toy" style="font-size:40px"></div>
+
 </div>
 
-<!-- GAMES -->
 <div id="games" class="section">
-<h2>Games</h2>
-<button onclick="tap()">Tap (+5)</button>
-<button onclick="spin()">Spin</button>
-<button onclick="multiply()">Multiply Quiz</button>
-<button onclick="addition()">Addition Quiz</button>
-<button onclick="spelling()">Spelling Quiz</button>
-<button onclick="logic()">Logic Quiz</button>
-<button onclick="science()">Science Quiz</button>
+
+<h3>Catch the Coin</h3>
+
+<div id="gameArea">
+<div id="coin">🪙</div>
 </div>
 
-<!-- CHAT -->
+<p>Score: <span id="score">0</span></p>
+
+</div>
+
 <div id="chat" class="section">
-<h2>K-Hearts AI</h2>
-<div class="chat-box" id="chatBox"></div>
+
+<div class="chatbox" id="chatbox"></div>
+
 <input id="chatInput">
 <button onclick="send()">Send</button>
+
 </div>
 
-<!-- LEADERBOARD -->
-<div id="leaderboard" class="section">
-<h2>Leaderboard</h2>
-<div id="board"></div>
+<div id="members" class="section">
+
+<h3>Members</h3>
+
+<p>Karlyn — Leader, Main Rapper, Lead Dancer</p>
+<p>Trixie — Center, Main Dancer</p>
+<p>Hayley — Lead Vocalist, Maknae</p>
+<p>Alyssa — Main Vocalist, Visual</p>
+
 </div>
 
-<!-- LYRICS -->
 <div id="lyrics" class="section">
-<h2>NO LIMITS</h2>
-<div style="background:white;padding:20px;border-radius:20px;text-align:left;max-height:450px;overflow:auto;line-height:1.7;font-size:15px;">
 
-No limits<br>
-No pressure<br>
-No ceiling<br>
-We go up<br><br>
+<h3>No Limits</h3>
 
-Walk in like a headline, cameras all flash<br>
-Step so sharp, make the whole world crash<br>
-Different languages, same ambition<br>
-Born to win — that’s the only mission<br><br>
+<div style="background:white;padding:20px;border-radius:20px;text-align:left">
 
-Mirror mirror, we don’t compete<br>
-We break the glass in designer feet<br>
-No permission, we elevate<br>
-Watch how legends are made<br><br>
+No limits  
+No pressure  
+No ceiling  
+We go up  
 
-We don’t bend, we don’t break<br>
-Pressure turns to diamonds in our wake<br>
-Every scar is a shining mark<br>
-Strike a match — ignite the dark<br><br>
+Walk in like a headline, cameras all flash  
+Step so sharp, make the whole world crash  
+Different languages, same ambition  
+Born to win — that’s the only mission  
 
-We go higher, higher<br>
-Touch the sky, no ceiling<br>
-Fearless fire, fire<br>
-Got the whole world feeling<br><br>
+Mirror mirror, we don’t compete  
+We break the glass in designer feet  
+No permission, we elevate  
+Watch how legends are made  
 
-No doubts, no fear<br>
-We came too far to disappear<br>
-Global girls, we redefine<br>
-Step aside — the crown is mine<br><br>
+We don’t bend, we don’t break  
+Pressure turns to diamonds in our wake  
+Every scar is a shining mark  
+Strike a match — ignite the dark  
 
-Runway rebel, spotlight glow<br>
-Soft but savage, let them know<br>
-From every city we ignite<br>
-Day one queens, built for the fight<br><br>
+We go higher, higher  
+Touch the sky, no ceiling  
+Fearless fire, fire  
+Got the whole world feeling  
 
-Whispers turning into cheers<br>
-We turned pain into premiere<br>
-Every stage, every scene<br>
-We don’t follow — we lead<br><br>
+No doubts, no fear  
+We came too far to disappear  
+Global girls, we redefine  
+Step aside — the crown is mine  
 
-Too real, too bold<br>
-Too young, too gold<br>
-They said slow down — we said watch this<br>
-Turn small talk into a hit list<br><br>
-
-Confidence loud, no apologies<br>
-Breaking rules is our policy<br>
-Future written in neon light<br>
-We don’t knock — we own the night<br><br>
-
-If they doubt us, let them talk<br>
-We don’t walk — we skywalk<br>
-Every fall just fuels the flame<br>
-Say our names — remember the game<br><br>
-
-We go higher, higher<br>
-World on our shoulders shining<br>
-Fearless fire, fire<br>
-Perfect timing<br><br>
-
-No glass left to break<br>
-No crown left to take<br>
-We don’t stop, we redefine<br>
+No glass left to break  
+No crown left to take  
+We don’t stop, we redefine  
 No ceiling — we climb.
 
 </div>
@@ -226,130 +214,227 @@ No ceiling — we climb.
 </div>
 
 <script>
-let coins=100;
-let happiness=70;
-let health=100;
-let username="";
+
+let coins=100
+let health=100
+let username=""
+let score=0
 
 let responses=[
-"Let’s break that down step by step.",
-"What subject is this for?",
-"Explain what you’ve tried so far.",
-"You’re thinking in the right direction.",
-"Try identifying the key concept.",
-"Break it into smaller parts.",
-"What’s the question REALLY asking?",
-"You’ve got this.",
-"Check your working carefully.",
-"That’s interesting — tell me more.",
-"Try to explain it in your own words.",
-"Think about patterns you see.",
-"Have you tried a different approach?",
-"Focus on one step at a time.",
-"Remember to double-check your answer.",
-"Ask yourself what you know already.",
-"Think logically before answering.",
-"Keep calm and reason through it.",
-"Imagine the problem visually.",
-"Look for clues in the question.",
-"Use what you learned before.",
-"Don’t rush — step by step.",
-"Visualize the solution in your mind.",
-"Consider examples to guide you.",
-"Take a deep breath, then solve.",
-"Reflect on why it works that way.",
-// JS-specific tips
-"Ah! That sounds like JavaScript — try using console.log() to debug.",
-"Loops are your friend! for, while, or do-while?",
-"Remember: = is assignment, == or === is comparison.",
-"Use functions to keep your code neat and reusable.",
-"Try checking your brackets — those often break JS.",
-"If your button isn’t working, make sure your onclick is correct.",
-"Don’t forget semicolons! They can save headaches.",
-"Use document.getElementById('id') to select elements.",
-"Arrays start at index 0 in JS!",
-"Try writing your code in smaller pieces first.",
-"Variables can be let, const, or var — choose wisely.",
-"Remember to check your console for errors!",
-"Functions can return values — use that to store results.",
-"Objects are amazing for grouping data together.",
-"Event listeners help you make interactive elements.",
-"Keep practicing! Small mistakes are normal in JS.",
-"Debug step by step and you’ll find the bug.",
-"Try searching MDN docs for any JS function you’re unsure of."
-];
+"Hi!",
+"Hey!",
+"What's up?",
+"Tell me something interesting.",
+"That's funny 😂",
+"That's wild.",
+"I'm listening.",
+"Spill the tea.",
+"You're hilarious.",
+"That's iconic.",
+"Main character energy.",
+"Interesting...",
+"I'm curious now.",
+"Explain more.",
+"That's adorable.",
+"I'm impressed.",
+"You're creative.",
+"That's clever.",
+"Relatable.",
+"Same honestly.",
+"I'm vibing with this.",
+"That escalated quickly.",
+"You have good taste.",
+"That's exciting.",
+"You're funny.",
+"That's chaotic but fun.",
+"I'm enjoying this conversation.",
+"That's surprising.",
+"I'm invested now.",
+"This is entertaining.",
+"That's bold.",
+"You're full of ideas.",
+"That's dramatic!",
+"That sounds crazy.",
+"I'm curious.",
+"Tell me more.",
+"That's unexpected.",
+"That's kind of genius.",
+"That's a vibe.",
+"Cool!"
+]
+
+let moods={
+mad:["HEY 😡","Take care of me!","I'm angry!"],
+sad:["I'm sad...","Play with me","I feel lonely"],
+annoyed:["Hmm","You forgot me","I'm bored"],
+meh:["I'm ok","Just chilling","What now?"],
+playful:["Let's play!","Ball!!","YAY"],
+happy:["BEST DAY EVER","I LOVE YOU","Let's go!"]
+}
 
 function start(){
- username=document.getElementById("nameInput").value;
- if(username==="") return;
- document.getElementById("player").innerText=username;
- document.getElementById("login").style.display="none";
- document.getElementById("main").style.display="block";
- updateStats();
- setInterval(()=>{health-=5;if(health<0)health=0;updateStats();},30000);
+
+username=document.getElementById("nameInput").value
+
+if(username==="")return
+
+document.getElementById("player").innerText=username
+
+document.getElementById("login").style.display="none"
+document.getElementById("game").style.display="block"
+
+update()
+
+setInterval(()=>{
+health-=5
+if(health<0)health=0
+update()
+},30000)
+
 }
 
 function show(id){
- document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
- document.getElementById(id).classList.add("active");
+
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
+
+document.getElementById(id).classList.add("active")
+
 }
 
-function updateStats(){
- document.getElementById("coins").innerText=coins;
- document.getElementById("happy").innerText=happiness;
- document.getElementById("health").innerText=health;
- document.getElementById("board").innerHTML=username+" — "+coins+" coins";
+function update(){
+
+document.getElementById("coins").innerText=coins
+document.getElementById("health").innerText=health
+
+updateMood()
+
 }
 
-function choosePet(p){document.getElementById("pet").innerText=p;}
+function updateMood(){
 
-function buy(type,emoji,price){
- if(coins>=price){
-  coins-=price;
-  document.getElementById(type).innerText=emoji;
-  updateStats();
- }
+let petMood=""
+
+if(health<=10)petMood="mad"
+else if(health<=30)petMood="sad"
+else if(health<=50)petMood="annoyed"
+else if(health<=70)petMood="meh"
+else if(health<100)petMood="playful"
+else petMood="happy"
+
+document.getElementById("mood").innerText=petMood
+document.getElementById("petMood").innerText=petMood
+
+let lines=moods[petMood]
+
+let line=lines[Math.floor(Math.random()*lines.length)]
+
+document.getElementById("speech").innerText=line
+
 }
 
-function play(){coins+=5; happiness+=5; updateStats();}
-function bathe(){happiness+=10; health+=10; if(health>100)health=100; updateStats();}
-function feed(){if(coins>=5){coins-=5; health+=15; if(health>100)health=100;} updateStats();}
+function feed(){
 
-function tap(){coins+=5; updateStats();}
-function spin(){let w=Math.floor(Math.random()*30)+1; coins+=w; updateStats();}
-function multiply(){let ans=prompt("7 x 8 = ?"); if(ans=="56"){coins+=20;} updateStats();}
-function addition(){let ans=prompt("45 + 37 = ?"); if(ans=="82"){coins+=15;} updateStats();}
-function spelling(){let ans=prompt("Spell: ambition"); if(ans&&ans.toLowerCase()=="ambition"){coins+=20;} updateStats();}
-function logic(){let ans=prompt("If you take 2 apples from 3, how many do YOU have?"); if(ans=="2"){coins+=25;} updateStats();}
-function science(){let ans=prompt("Planet we live on?"); if(ans&&ans.toLowerCase()=="earth"){coins+=20;} updateStats();}
+if(coins>=5){
+coins-=5
+health+=20
+}
+
+if(health>100)health=100
+
+document.getElementById("speech").innerText="Yum!"
+
+update()
+
+}
+
+function bathe(){
+
+health+=10
+
+if(health>100)health=100
+
+document.getElementById("speech").innerText="Bath time!"
+
+update()
+
+}
+
+function play(){
+
+coins+=5
+health+=5
+
+let pet=document.getElementById("pet")
+
+pet.classList.add("playing")
+
+setTimeout(()=>{
+pet.classList.remove("playing")
+},2000)
+
+update()
+
+}
+
+function buyToy(item,price){
+
+if(coins>=price){
+coins-=price
+document.getElementById("toy").innerText=item
+}
+
+update()
+
+}
+
+let coin=document.getElementById("coin")
+
+function moveCoin(){
+
+let x=Math.random()*280
+let y=Math.random()*280
+
+coin.style.left=x+"px"
+coin.style.top=y+"px"
+
+}
+
+setInterval(moveCoin,1000)
+
+coin.onclick=function(){
+
+score++
+coins+=5
+
+document.getElementById("score").innerText=score
+
+moveCoin()
+
+update()
+
+}
 
 function send(){
- let input=document.getElementById("chatInput").value;
- if(input==="") return;
- let box=document.getElementById("chatBox");
- box.innerHTML+="<p><b>"+username+":</b> "+input+"</p>";
- let reply="";
- let text=input.toLowerCase();
 
- // JS detection
- if(text.includes("js") || text.includes("javascript") || text.includes("button") || text.includes("loop") || text.includes("console") || text.includes("function")){
-   reply = responses[Math.floor(Math.random()*(responses.length-15)+15)];
- } 
- else if(text.includes("math")||text.includes("+")||text.includes("x"))
-   reply="Let’s solve it step by step. What numbers are we using?";
- else if(text.includes("sad")||text.includes("stress"))
-   reply="I’m here for you 💖 What happened?";
- else if(text.includes("essay")||text.includes("write"))
-   reply="Start with introduction, 3 key points, then conclusion.";
- else if(text.includes("?"))
-   reply="Great question. Let’s think logically about it.";
- else
-   reply=responses[Math.floor(Math.random()*15)];
+let input=document.getElementById("chatInput").value
 
- box.innerHTML+="<p><b>K-Hearts AI:</b> "+reply+"</p>";
- box.scrollTop=box.scrollHeight;
- document.getElementById("chatInput").value="";
+if(input==="")return
+
+let box=document.getElementById("chatbox")
+
+box.innerHTML+="<p><b>"+username+":</b> "+input+"</p>"
+
+let reply=responses[Math.floor(Math.random()*responses.length)]
+
+box.innerHTML+="<p><b>Pet:</b> "+reply+"</p>"
+
+box.scrollTop=box.scrollHeight
+
+document.getElementById("chatInput").value=""
+
 }
+
 </script>
+
 </body>
 </html>
