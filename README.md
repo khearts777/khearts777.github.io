@@ -45,7 +45,7 @@ position:relative;
 100%{transform:translateY(0)}
 }
 
-.playing{animation:bounce 0.6s infinite;}
+.playing{animation:bounce .6s infinite;}
 
 .chatbox{
 height:220px;
@@ -57,18 +57,15 @@ padding:10px;
 text-align:left;
 }
 
-#gameArea{
-width:300px;
-height:300px;
+.card{
+width:60px;
+height:60px;
+display:inline-block;
 background:white;
-margin:auto;
-border-radius:20px;
-position:relative;
-}
-
-#coin{
-position:absolute;
-font-size:35px;
+margin:5px;
+border-radius:10px;
+line-height:60px;
+font-size:30px;
 cursor:pointer;
 }
 
@@ -92,18 +89,20 @@ Enter your Kaes name:<br>
 <button onclick="choosePet('🐶')">Dog</button>
 <button onclick="choosePet('🐱')">Cat</button>
 <button onclick="choosePet('🐧')">Penguin</button>
+<button onclick="choosePet('🦊')">Fox</button>
+<button onclick="choosePet('🐼')">Panda</button>
 
 </div>
 
 <div id="game" style="display:none">
 
-<p>Coins: <span id="coins"></span></p>
-<p>Health: <span id="health"></span></p>
-<p>Mood: <span id="mood"></span></p>
+<p>Coins: <span id="coins"></span> | XP: <span id="xp"></span></p>
+<p>Health: <span id="health"></span> | Mood: <span id="mood"></span></p>
 
 <button onclick="show('home')">Home</button>
 <button onclick="show('pets')">Pets</button>
 <button onclick="show('games')">Games</button>
+<button onclick="show('shop')">Shop</button>
 <button onclick="show('chat')">Chat</button>
 <button onclick="show('members')">Members</button>
 <button onclick="show('lyrics')">Lyrics</button>
@@ -116,47 +115,43 @@ Enter your Kaes name:<br>
 
 <div id="pet" class="pet walk">🐶</div>
 
-<p>Mood: <span id="petMood"></span></p>
-
-<div id="speech" style="background:white;padding:10px;border-radius:15px;width:200px;margin:auto;">
-Hi!
-</div>
-
-<br>
+<p id="speech">Hi!</p>
 
 <button onclick="feed()">Feed</button>
 <button onclick="bathe()">Bathe</button>
 <button onclick="play()">Play</button>
+<button onclick="sleep()">Sleep</button>
+
+</div>
+
+<div id="shop" class="section">
+
+<h3>Accessories</h3>
+
+<button onclick="buy('🎩',30)">Hat</button>
+<button onclick="buy('👑',50)">Crown</button>
+<button onclick="buy('🕶️',40)">Glasses</button>
+
+<p>Current: <span id="acc"></span></p>
 
 </div>
 
 <div id="games" class="section">
 
-<h3>Game 1: Catch the Coin</h3>
+<h3>Catch Coin</h3>
+<button onclick="coinGame()">Play</button>
 
-<div id="gameArea">
-<div id="coin">🪙</div>
-</div>
-
-<p>Score: <span id="score">0</span></p>
-
-<hr>
-
-<h3>Game 2: Number Guess</h3>
-
+<h3>Number Guess</h3>
 <button onclick="guessGame()">Play</button>
 
-<hr>
+<h3>Reaction Game</h3>
+<button onclick="reactionGame()">Play</button>
 
-<h3>Game 3: Reaction Tap</h3>
+<h3>Quiz</h3>
+<button onclick="quiz()">Play</button>
 
-<button onclick="reactionGame()">Tap Fast!</button>
-
-<hr>
-
-<h3>Game 4: Quiz</h3>
-
-<button onclick="quizGame()">Start Quiz</button>
+<h3>Memory Game</h3>
+<div id="memory"></div>
 
 </div>
 
@@ -171,18 +166,18 @@ Hi!
 
 <div id="members" class="section">
 
-<h3>Members</h3>
+<h2>🌟 Members</h2>
 
-<p>Karlyn — Leader, Main Rapper, Lead Dancer</p>
-<p>Trixie — Center, Main Dancer</p>
-<p>Hayley — Lead Vocalist, Maknae</p>
-<p>Alyssa — Main Vocalist, Visual</p>
+<p><b>Karlyn</b> — Leader, Main Rapper, Lead Dancer</p>
+<p><b>Trixie</b> — Center, Main Dancer</p>
+<p><b>Hayley</b> — Lead Vocalist, Maknae</p>
+<p><b>Alyssa</b> — Main Vocalist, Visual</p>
 
 </div>
 
 <div id="lyrics" class="section">
 
-<h3>No Limits</h3>
+<h2>No Limits</h2>
 
 <p style="background:white;padding:20px;border-radius:20px;text-align:left">
 
@@ -201,11 +196,6 @@ We break the glass in designer feet
 No permission, we elevate  
 Watch how legends are made  
 
-We don’t bend, we don’t break  
-Pressure turns to diamonds in our wake  
-Every scar is a shining mark  
-Strike a match — ignite the dark  
-
 We go higher, higher  
 Touch the sky, no ceiling  
 Fearless fire, fire  
@@ -216,11 +206,6 @@ We came too far to disappear
 Global girls, we redefine  
 Step aside — the crown is mine  
 
-No glass left to break  
-No crown left to take  
-We don’t stop, we redefine  
-No ceiling — we climb.
-
 </p>
 
 </div>
@@ -230,16 +215,34 @@ No ceiling — we climb.
 <script>
 
 let coins=100
+let xp=0
 let health=100
 let username=""
-let score=0
+let accessory=""
 let secret=Math.floor(Math.random()*10)+1
+
+let memory={color:""}
+
+function save(){
+localStorage.setItem("khearts",JSON.stringify({coins,xp,health,accessory}))
+}
+
+function load(){
+let d=JSON.parse(localStorage.getItem("khearts"))
+if(d){
+coins=d.coins
+xp=d.xp
+health=d.health
+accessory=d.accessory
+}
+}
 
 function start(){
 
 username=document.getElementById("nameInput").value
-
 if(username==="")return
+
+load()
 
 document.getElementById("login").style.display="none"
 document.getElementById("petSelect").style.display="block"
@@ -257,18 +260,11 @@ document.getElementById("player").innerText=username
 
 update()
 
-setInterval(()=>{
-health-=5
-if(health<0)health=0
-update()
-},30000)
-
 }
 
 function show(id){
 
 document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
-
 document.getElementById(id).classList.add("active")
 
 }
@@ -276,93 +272,74 @@ document.getElementById(id).classList.add("active")
 function update(){
 
 document.getElementById("coins").innerText=coins
+document.getElementById("xp").innerText=xp
 document.getElementById("health").innerText=health
-
-updateMood()
-
-}
-
-function updateMood(){
+document.getElementById("acc").innerText=accessory
 
 let mood=""
 
-if(health<=10)mood="mad"
-else if(health<=30)mood="sad"
-else if(health<=50)mood="annoyed"
-else if(health<=70)mood="meh"
-else if(health<100)mood="playful"
-else mood="extremely happy"
+if(health<=20)mood="mad"
+else if(health<=40)mood="sad"
+else if(health<=60)mood="meh"
+else if(health<=80)mood="playful"
+else mood="happy"
 
 document.getElementById("mood").innerText=mood
-document.getElementById("petMood").innerText=mood
+
+save()
 
 }
 
 function feed(){
-
-if(coins>=5){
 coins-=5
 health+=20
-}
-
 if(health>100)health=100
-
 document.getElementById("speech").innerText="Yum!"
-
 update()
-
 }
 
 function bathe(){
-
 health+=10
-if(health>100)health=100
-
 document.getElementById("speech").innerText="Splash!"
-
 update()
-
 }
 
 function play(){
 
+xp+=5
 coins+=5
-health+=5
 
-let pet=document.getElementById("pet")
+let p=document.getElementById("pet")
+p.classList.add("playing")
 
-pet.classList.add("playing")
-
-setTimeout(()=>{
-pet.classList.remove("playing")
-},2000)
+setTimeout(()=>p.classList.remove("playing"),2000)
 
 update()
 
 }
 
-let coin=document.getElementById("coin")
+function sleep(){
+health=100
+document.getElementById("speech").innerText="Zzz..."
+update()
+}
 
-function moveCoin(){
+function buy(item,cost){
 
-let x=Math.random()*260
-let y=Math.random()*260
+if(coins>=cost){
+coins-=cost
+accessory=item
+}
 
-coin.style.left=x+"px"
-coin.style.top=y+"px"
+update()
 
 }
 
-setInterval(moveCoin,1000)
+function coinGame(){
 
-coin.onclick=function(){
-
-score++
-coins+=5
-
-document.getElementById("score").innerText=score
-
-moveCoin()
+coins+=10
+xp+=5
+alert("You found coins!")
 
 update()
 
@@ -370,20 +347,11 @@ update()
 
 function guessGame(){
 
-let guess=prompt("Guess number 1-10")
+let g=prompt("Guess 1-10")
 
-if(guess==secret){
-
-alert("Correct! +20 coins")
-
+if(g==secret){
+alert("Correct!")
 coins+=20
-
-secret=Math.floor(Math.random()*10)+1
-
-}else{
-
-alert("Wrong! Try again")
-
 }
 
 update()
@@ -393,42 +361,27 @@ update()
 function reactionGame(){
 
 let start=Date.now()
-
-alert("Click OK then tap again FAST!")
-
+alert("Click OK then click again fast!")
 let end=Date.now()
 
-let reaction=end-start
-
-if(reaction<300){
-
-coins+=25
-alert("Fast! +25 coins")
-
+if(end-start<300){
+coins+=20
+alert("Fast!")
 }else{
-
 coins+=5
-alert("Slow! +5 coins")
-
 }
 
 update()
 
 }
 
-function quizGame(){
+function quiz(){
 
-let ans=prompt("Who is the leader? A)Karlyn B)Trixie")
+let a=prompt("Who is leader? A)Karlyn B)Trixie")
 
-if(ans.toLowerCase()=="a"){
-
+if(a.toLowerCase()=="a"){
 coins+=20
 alert("Correct!")
-
-}else{
-
-alert("Wrong!")
-
 }
 
 update()
@@ -437,9 +390,8 @@ update()
 
 function send(){
 
-let input=document.getElementById("chatInput").value.toLowerCase()
-
-if(input==="")return
+let input=document.getElementById("chatInput").value
+let lower=input.toLowerCase()
 
 let box=document.getElementById("chatbox")
 
@@ -447,28 +399,32 @@ box.innerHTML+="<p><b>"+username+":</b> "+input+"</p>"
 
 let reply=""
 
-if(input.includes("hello")||input.includes("hi")){
-reply="Hi "+username+"! 💖"
+if(lower.includes("hello")||lower.includes("hi")){
+reply="Hi "+username+"! 💖 I'm really happy to chat with you."
+}
+
+else if(lower.includes("favorite color")){
+memory.color=input.split("is")[1]
+reply="Nice! I'll remember your favorite color is "+memory.color
 }
 
 else{
 
 let responses=[
-"That's interesting!",
-"Tell me more!",
-"LOL 😂",
-"I'm listening.",
-"Spill the tea ☕",
-"That's iconic.",
-"Main character energy!",
-"That's cool.",
-"I'm curious now.",
-"Explain more!",
-"That sounds fun.",
-"You're hilarious.",
-"That's surprising.",
-"I'm enjoying this chat!",
-"That's a vibe."
+
+"That's really interesting. Tell me more about it!",
+"I'm enjoying this chat actually.",
+"That's a fun thing to talk about.",
+"Your pet looks like it wants attention too 🐾",
+"That's such a random but funny thing to say.",
+"I wonder what you'll say next.",
+"That's actually a cool idea.",
+"This conversation is getting interesting.",
+"ooh! nice!.",
+"yeahh ikr?!.",
+"okayyy!.",
+"how r u tdy?."
+
 ]
 
 reply=responses[Math.floor(Math.random()*responses.length)]
@@ -477,11 +433,13 @@ reply=responses[Math.floor(Math.random()*responses.length)]
 
 box.innerHTML+="<p><b>AI:</b> "+reply+"</p>"
 
-box.scrollTop=box.scrollHeight
-
 document.getElementById("chatInput").value=""
 
+box.scrollTop=box.scrollHeight
+
 }
+
+update()
 
 </script>
 
