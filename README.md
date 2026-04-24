@@ -423,19 +423,19 @@
       {
         name: "Chen Su Lan Home",
         desc: "A children's home providing residential care for vulnerable children aged 5–14. Holistic development & education support.",
-        donateUrl: "https://www.chensulanhome.org.sg/donate",
+        donateUrl: "https://www.cslmch.org.sg/",
         icon: "fa-home"
       },
       {
-        name: "Jamiyah Children's Home",
-        desc: "Shelter and care for orphans, abandoned and at-risk children. Offers academic & vocational training.",
-        donateUrl: "https://jamiyah.org.sg/children-home/",
-        icon: "fa-hand-holding-heart"
+        name: "Children's Wishing Well",
+        desc: "Shelter and care for underprivileged children. Offers academic & vocational training.",
+        donateUrl: "https://www.wishingwell.org.sg/",
+        icon: "fa-wishing-well"
       },
       {
-        name: "Melrose Home",
+        name: "Children's Aid Society",
         desc: "Provides long-term residential care for children and youth with challenging family backgrounds.",
-        donateUrl: "https://www.melrosehome.org.sg/donations",
+        donateUrl: "https://childrensaidsociety.org.sg/",
         icon: "fa-tree"
       },
       {
