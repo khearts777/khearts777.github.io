@@ -430,7 +430,7 @@
         name: "Children's Wishing Well",
         desc: "Shelter and care for underprivileged children. Offers academic & vocational training.",
         donateUrl: "https://www.wishingwell.org.sg/",
-        icon: "fa-wishing-well"
+        icon: "fa-hand-holding-heart"
       },
       {
         name: "Children's Aid Society",
@@ -441,20 +441,6 @@
       {
         name: "Sunbeam Place @ Children's Aid Society",
         desc: "Offers a safe, nurturing environment for children who have experienced abuse or neglect.",
-        donateUrl: "https://www.childrens-aid-society.org.sg/sunbeam-place/donate",
-        icon: "fa-sun"
-      },
-      {
-        name: "Gracehaven Children's Home",
-        desc: "Residential home by The Salvation Army, supporting children and youth at risk.",
-        donateUrl: "https://www.salvationarmy.org/singapore/gracehaven_donate",
-        icon: "fa-dove"
-      },
-      {
-        name: "Boys' Town Singapore",
-        desc: "Residential care and youth programmes for boys from disadvantaged families.",
-        donateUrl: "https://www.boystown.org.sg/donate",
-        icon: "fa-male"
       }
     ];
 
