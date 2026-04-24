@@ -61,7 +61,7 @@
     }
     /* navbar */
     .navbar {
-      background: white;
+      background:yellow ;
       box-shadow: 0 4px 20px rgba(0,0,0,0.02);
       position: sticky;
       top: 0;
@@ -356,7 +356,7 @@
         <div class="hero-content">
           <div class="hero-badge"><i class="fas fa-heart"></i> Every child deserves a future</div>
           <h1>Lifting Voices of <br>Underprivileged Children in Singapore</h1>
-          <p>Across Singapore, hundreds of children in orphanages and from low-income families dream of stability, education, and love. Your awareness and direct support to established children's homes can create real change.</p>
+          <p>Across Singapore, hundreds of children in orphanages and from low-income families are hoping for stability, education, and care. Your awareness and direct support to established children's homes can impact the community.</p>
           <div class="btn-group">
             <a href="#orphanages" class="btn btn-primary"><i class="fas fa-hand-holding-heart"></i> View Children's Homes</a>
             <a href="#howtohelp" class="btn btn-outline"><i class="fas fa-dove"></i> Ways to Help</a>
@@ -386,35 +386,35 @@
     <section id="news" class="section section-warm">
       <div class="container">
         <h2>Recent news & stories</h2>
-        <p>Stay informed about issues affecting underprivileged children in Singapore and inspiring community efforts.</p>
+        <p>Stay informed about underprivileged children in Singapore and efforts by people around Singapore. We hope these news can help motivate you to do something about this. </p>
         <div class="news-grid" id="newsContainer">
           <!-- news articles injected via JS -->
         </div>
       </div>
     </section>
 
-    <!-- How you can help (advocacy & actions) -->
+    <!-- WHAT IF I WANT TO HELP BUT I DONT KNOW HOW TO? heres how you can help! (advocacy & actions) -->
     <section id="howtohelp" class="section section-soft">
       <div class="container">
         <h2>Simple ways to make a difference</h2>
         <div class="impact-steps">
-          <div class="step"><i class="fas fa-hand-holding-usd"></i><h3>Direct Donations</h3><p>Give monetary support directly to the orphanages listed above. Even $10 provides meals or school essentials.</p></div>
-          <div class="step"><i class="fas fa-box-open"></i><h3>Wishlist & Goods</h3><p>Many homes need milk powder, diapers, books, or hygiene kits. Contact the home to donate physical items.</p></div>
-          <div class="step"><i class="fas fa-chalkboard-user"></i><h3>Volunteer Time</h3><p>Become a tutor, mentor, or organise weekend activities. Check each home’s volunteering page.</p></div>
-          <div class="step"><i class="fas fa-share-alt"></i><h3>Raise Awareness</h3><p>Share this website, follow the homes on social media, and talk about child welfare in Singapore.</p></div>
+          <div class="step"><i class="fas fa-hand-holding-usd"></i><h3>Direct Donations</h3><p>If you want to, you can give monetary support directly to the orphanages listed above! Even $10 provides meals or school essentials for these children.</p></div>
+          <div class="step"><i class="fas fa-box-open"></i><h3>Wishlist & Goods</h3><p>Many homes need milk powder, diapers, books, or hygiene kits. You can contact the home if you choose to donate physical items.</p></div>
+          <div class="step"><i class="fas fa-chalkboard-user"></i><h3>Volunteer Time</h3><p>You can also help by taking time out of your busy schedule to help these children! Become a tutor, mentor, or organise weekend activities. Check each home’s volunteering page.</p></div>
+          <div class="step"><i class="fas fa-share-alt"></i><h3>Raise Awareness</h3><p>Share this website and talk about child welfare in Singapore.</p></div>
         </div>
         <div class="quote" style="background: #f9efe6; border-radius: 32px; padding: 28px; margin-top: 20px;">
           <i class="fas fa-quote-left" style="color:#e67e22; margin-right:12px;"></i> 
-          "No act of kindness, no matter how small, is ever wasted. Supporting a child today builds a stronger Singapore tomorrow."
+          "Remember,every little action counts! Supporting a child today builds a better Singapore for everyone!"
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <p><i class="fas fa-child"></i> Voices of Hope — Advocating for every child’s right to a nurturing home.</p>
-    <p style="margin-top: 12px; font-size: 0.85rem;">We are an independent awareness platform. We do not collect donations. All listed organisations are registered charities / children's homes in Singapore. Please donate directly through their official channels.</p>
-    <p style="margin-top: 20px;">❤️ Be the light. Advocate, share, support.</p>
+    <p><i class="fas fa-child"></i> Voices of Hope — Advocating for everyone to know what these children are feeling.</p>
+    <p style="margin-top: 12px; font-size: 0.85rem;">We are from project serve, in a primary school in Singapore. We do not collect donations. All listed organisations are registered charities / children's homes in Singapore. Please donate directly through their official channels.I hope you would share it to others to raise awareness :)</p>
+    <p style="margin-top: 20px;">❤️ Lend a helping hand to children! Advocate, share, support.</p>
   </footer>
 
   <script>
@@ -439,8 +439,7 @@
         icon: "fa-tree"
       },
       {
-        name: "Sunbeam Place @ Children's Aid Society",
-        desc: "Offers a safe, nurturing environment for children who have experienced abuse or neglect.",
+        
       }
     ];
 
