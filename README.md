@@ -436,9 +436,7 @@
         name: "Children's Aid Society",
         desc: "Provides long-term residential care for children and youth with challenging family backgrounds.",
         donateUrl: "https://childrensaidsociety.org.sg/",
-        icon: "fa-tree"
-      },
-      {
+        icon: "fa-tree",
         
       }
     ];
@@ -446,10 +444,10 @@
     // NEWS ARTICLES about underprivileged children / orphanages in Singapore (real references, awareness)
     const newsArticles = [
       {
-        title: "More support needed for children from lower-income families in post-COVID Singapore",
-        date: "March 2025",
-        summary: "Channel News Asia report highlights gaps in early childhood support and how community donations to children's homes help bridge the divide.",
-        link: "https://www.channelnewsasia.com/singapore/children-low-income-families-support-community-4862131",
+        title: "Getting there is the hardest part: The perennial issue of preschool absenteeism among lower-income families",
+        date: "Dec 2025",
+        summary: "On its own, financial incentives to motivate these families to send their children to preschool regularly won't work, say experts.",
+        link: "https://www.channelnewsasia.com/singapore/preschool-absenteeism-lower-income-families-5610596",
         source: "CNA"
       },
       {
