@@ -51,13 +51,13 @@
       padding: 64px 0;
     }
     .section-light {
-      background-color: #ffffff;
+      background-color: #pink;
     }
     .section-warm {
-      background-color: #fff7f0;
+      background-color: #pink;
     }
     .section-soft {
-      background-color: #f4ede5;
+      background-color: #pink;
     }
     /* navbar */
     .navbar {
@@ -285,7 +285,7 @@
       margin-bottom: 16px;
     }
     .read-more {
-      color: #e67e22;
+      color: #pink;
       font-weight: 600;
       text-decoration: none;
       display: inline-flex;
